@@ -1,0 +1,23 @@
+Package: nlss
+Title: Network Latent Source Separation
+Version: 0.0.0.9000
+Authors@R: c( person("Ben", "Wu", 
+              email = "wuben1682000@gmail.com", 
+              role = c("aut", "cre")),
+              person("Jian", "Kang",
+              email = "jiankang@umich.edu",
+              role = "aut"),
+              person("Ying", "Guo",
+              email = "yguo2@emory.edu",
+              role = "aut") )
+Description: Latent source separation for network data.
+Depends: R (>= 3.4.0), MCMCpack, gtools
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+LinkingTo: 
+    Rcpp, RcppParallel
+Imports: 
+    Rcpp, RcppParallel, ica, gplots, stats, grDevices,plotrix
+SystemRequirements: GNU make
