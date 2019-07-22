@@ -1,12 +1,14 @@
-#' Title
+#' @title Summary of the MCMC result for NLSS
+#' @description The function summarizes the MCMC result and returns the posterior mean
+#' of A, the posterior mode of S, beta coefficient (frequency of each discrete value of S
+#' among the MCMC samples) and the log-likelihood trace.
 #'
 #' @param res result from the function NLSS
 #'
 #' @return
-#' @export
 #'
 #' @examples
-DLSS_gibbs_sampler_summary = function(res){
+NLSS_sum = function(res){
 
   n = dim(res$A)[1]
   save_iters= dim(res$S)[3]

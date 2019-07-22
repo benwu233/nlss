@@ -2,19 +2,30 @@
 % Please edit documentation in R/sim_NLSS.R
 \name{sim_NLSS}
 \alias{sim_NLSS}
-\title{Title}
+\title{Simulation of NLSS}
 \usage{
 sim_NLSS(n_node = 50, n = 40, alpha = 0.5, beta = 0.1)
 }
 \arguments{
-\item{n_node}{number of nodes}
+\item{n_node}{number of nodes.}
 
-\item{n}{sample size}
+\item{n}{sample size.}
 
-\item{alpha}{alpha}
+\item{alpha}{relative signal strengh.}
 
-\item{beta}{beta}
+\item{beta}{relative noise strengh.}
+}
+\value{
+a R list containing the following terms:
+\describe{
+  \item{X}{the observed matrix.}
+  \item{S}{the latent source matrix.}
+  \item{A}{the mixing coefficent matrix.}
+  \item{community}{the community index.}
+}
 }
 \description{
-Title
+This function simulates observations using NLSS with pre-specified latent sources.
+The number of latent sources is three, with one representing within-community connections and two
+representing cross-comminity connections.
 }

@@ -7,14 +7,14 @@
 vec_matlist(mat_list, q = 0, binarize = FALSE)
 }
 \arguments{
-\item{mat_list}{a list of matrices}
+\item{mat_list}{a list of matrices.}
 
-\item{q}{a quantile serving as a threshold, any value smaller than the quantile will be set to zero}
+\item{q}{a quantile serving as a threshold, any value smaller than the quantile will be set to zero.}
 
-\item{binarize}{binarize the outcome or not}
+\item{binarize}{logical. Binarize the outcome or not.}
 }
 \value{
-a matrix each row representing a matrix from the input mat_list
+a matrix with each row representing a matrix from the input mat_list.
 }
 \description{
 Vectorize a list of symmetric matrices and stack them together.

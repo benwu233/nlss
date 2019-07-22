@@ -2,7 +2,7 @@
 % Please edit documentation in R/connICA.R
 \name{connICA}
 \alias{connICA}
-\title{Title}
+\title{connICA}
 \usage{
 connICA(data, q)
 }
@@ -11,6 +11,9 @@ connICA(data, q)
 
 \item{q}{a}
 }
+\value{
+
+}
 \description{
-Title
+connICA
 }

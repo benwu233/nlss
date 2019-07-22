@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of nlss is to ...
+Network Latent Source Separation (nlss), a blind source separation algorithm designed for network data.
 
 ## Installation
 
@@ -27,27 +27,32 @@ You can install the released version of nlss from [CRAN](https://CRAN.R-project.
 install.packages("nlss")
 ```
 
+or from Github with:
+
+``` r
+library(devtools)
+install_github("benwu233/nlss")
+```
+
+
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to simulate networks with a nlss model and estimate a nlss model with MCMC algorithm:
 
 ```{r example}
-library(nlss)
 ## basic example code
+library(nlss)  
+set.seed(233)
+
+#simulate data with NLSS
+sim0 = sim_NLSS(n_node = 50,n = 40,alpha = 0.5, beta = 0.5)
+
+#check the dimension of the simulated data (n * n_node*(n_node-1)/2)
+dim(sim0$X)
+
+#estimation (burn_in=0 here to track the whole log-likelihood tarce, it should be relatively large in application)
+res = NLSS(data=sim0$X,q=3,total_iter = 1000, burn_in = 0, show_step=500)
+#track the log-likelihood
+plot(res$logLik, type = "l")
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:222
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

@@ -1,10 +1,10 @@
-#' Title
+#' connICA
 #'
 #' @param data Data matrix
 #' @param q a
 #'
 #' @return
-#' @export
+#'
 #' @importFrom ica icafast
 #' @importFrom stats quantile
 #' @importFrom stats cor

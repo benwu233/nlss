@@ -7,7 +7,8 @@
 
 <!-- badges: end -->
 
-The goal of nlss is to …
+Network Latent Source Separation (nlss), a blind source separation
+algorithm designed for network data.
 
 ## Installation
 
@@ -18,12 +19,21 @@ You can install the released version of nlss from
 install.packages("nlss")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+or from Github with:
 
 ``` r
-library(nlss)
+library(devtools)
+install_github("benwu233/nlss")
+```
+
+## Example
+
+This is a basic example which shows you how to simulate networks with a
+nlss model and estimate a nlss model with MCMC algorithm:
+
+``` r
+## basic example code
+library(nlss)  
 #> Loading required package: MCMCpack
 #> Loading required package: coda
 #> Loading required package: MASS
@@ -34,35 +44,19 @@ library(nlss)
 #> ## Support provided by the U.S. National Science Foundation
 #> ## (Grants SES-0350646 and SES-0350613)
 #> ##
-#> Loading required package: gtools
-#> 
-#> Attaching package: 'gtools'
-#> The following objects are masked from 'package:MCMCpack':
-#> 
-#>     ddirichlet, rdirichlet
-## basic example code
+set.seed(233)
+
+#simulate data with NLSS
+sim0 = sim_NLSS(n_node = 50,n = 40,alpha = 0.5, beta = 0.5)
+
+#check the dimension of the simulated data (n * n_node*(n_node-1)/2)
+dim(sim0$X)
+#> [1]   40 1225
+
+#estimation (burn_in=0 here to track the whole log-likelihood tarce, it should be relatively large in application)
+res = NLSS(data=sim0$X,q=3,total_iter = 1000, burn_in = 0, show_step=500)
+#track the log-likelihood
+plot(res$logLik, type = "l")
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
-
-You can also embed plots, for <example:222>
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub\!
+<img src="man/figures/README-example-1.png" width="100%" />

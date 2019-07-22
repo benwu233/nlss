@@ -9,19 +9,19 @@ heatmap.net(S, lim = c(min(S), max(S)), community = rep(1, (1 + sqrt(1
   filename)
 }
 \arguments{
-\item{S}{a matrix, each row represents a vectorized weighted adjacency matrix}
+\item{S}{a matrix with each row representing a vectorized weighted adjacency matrix.}
 
-\item{lim}{a 2-dimentional vector specifying the limits for the data}
+\item{lim}{a 2-dimentional vector specifying the limits for the data,}
 
-\item{community}{a vector represents the community each node belongs to}
+\item{community}{a vector represents the community each node belongs to.}
 
-\item{color}{colorbar for the heatmap}
+\item{color}{colorbar for the heatmap,}
 
-\item{legend}{type of the legend, it can be NULL (no legend), "FC" (a symmetric, functional-connectivity-type legend) or "SC" (a asymmetric, structural-connectivity-type legend)}
+\item{legend}{type of the legend, it can be NULL (no legend), "FC" (a symmetric, functional-connectivity-type legend) or "SC" (a asymmetric, structural-connectivity-type legend).}
 
 \item{path}{the path that heatmaps will be stored at, ended with a "/" or "\".}
 
-\item{filename}{names for heatmaps}
+\item{filename}{names for heatmaps.}
 }
 \description{
 The function plots heatmaps for single or multiple network(s).

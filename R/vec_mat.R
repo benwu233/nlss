@@ -6,7 +6,6 @@
 #' @param x a symmetric matrix or a vector
 #'
 #' @return a vector or a symmetric matrix
-#' @export
 #'
 #' @examples
 #' x = matrix(rnorm(36),nrow = 6)

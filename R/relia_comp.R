@@ -1,12 +1,15 @@
-#' Title
+#' @title Reliability of sources
+#' @description The function calculates the reliability index of sources for NLSS. The input is a list of
+#' matrices with the first matrix being estimated sources from the whole dataset and the following matrices
+#' being estimated sources from bootsrap samples of the whole dataset.
 #'
-#' @param Slist a list of matrices
+#' @param Slist a list of matrices with rows representing vectorization of latent sources.
 #'
-#' @return
+#' @return Reliability index.
 #' @export
 #'
 #' @examples
-relia_comp = function(Slist){
+relia_rows = function(Slist){
 
   S0 = Slist[[1]]
   if(class(S0)!="matrix"){
@@ -46,5 +49,5 @@ relia_comp = function(Slist){
     r_out2[i] = tmp0
   }
 
-  return(list(r_out = r_out, r_out2 = r_out2) )
+  return(r = r_out )
 }

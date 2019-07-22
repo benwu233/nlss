@@ -1,13 +1,16 @@
-#' Title
+#' @title Match discrete value matrices by their rows
+#' @description The function reorders the rows of matrices to match them to rows of the
+#' first matrix in the list.
 #'
-#' @param Slist list of q*p discrete value source matrics
+#' @param Slist list of discrete value source matrices with same dimensions.
 #'
-#' @return list of q*p discrete value source matrics with rows matched to  the first matrix
+#' @return A list of discrete value source matrices with rows matched to the rows of the first matrix.
 #' @export
 #'
 #' @examples
 #' @importFrom gtools permutations
-match_comp = function(Slist){
+#'
+match_rows = function(Slist){
   S0 = Slist[[1]]
   Slist_out = list()
   Slist_out[[1]] = S0

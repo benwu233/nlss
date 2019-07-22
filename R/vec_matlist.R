@@ -2,11 +2,11 @@
 #' @description Vectorize a list of symmetric matrices and stack them together.
 #' The outcome can be thresholded and binarized with optional parameters.
 #'
-#' @param mat_list a list of matrices
-#' @param q a quantile serving as a threshold, any value smaller than the quantile will be set to zero
-#' @param binarize binarize the outcome or not
+#' @param mat_list a list of matrices.
+#' @param q a quantile serving as a threshold, any value smaller than the quantile will be set to zero.
+#' @param binarize logical. Binarize the outcome or not.
 #'
-#' @return a matrix each row representing a matrix from the input mat_list
+#' @return a matrix with each row representing a matrix from the input mat_list.
 #' @export
 #'
 #' @examples

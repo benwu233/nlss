@@ -1,11 +1,20 @@
-#' Title
+#' @title Simulation of NLSS
+#' @description This function simulates observations using NLSS with pre-specified latent sources.
+#' The number of latent sources is three, with one representing within-community connections and two
+#' representing cross-comminity connections.
 #'
-#' @param n_node number of nodes
-#' @param n sample size
-#' @param alpha alpha
-#' @param beta beta
+#' @param n_node number of nodes.
+#' @param n sample size.
+#' @param alpha relative signal strengh.
+#' @param beta relative noise strengh.
 #'
-#' @return
+#' @return a R list containing the following terms:
+#' \describe{
+#'   \item{X}{the observed matrix.}
+#'   \item{S}{the latent source matrix.}
+#'   \item{A}{the mixing coefficent matrix.}
+#'   \item{community}{the community index.}
+#' }
 #' @export
 #'
 #' @importFrom stats runif
@@ -20,11 +29,6 @@ sim_NLSS = function(n_node = 50, n = 40, alpha = 0.5, beta = 0.1 ){
   S = matrix(0,nrow = q-1, ncol = p)
   A = matrix(0,nrow = n, ncol = q)
   K = 2
-
-  A[,1] = runif(n, min = 0.3, max = 0.5)
-  A[,2] = runif(n, min = 0.15, max = 0.2)
-  A[,3] = runif(n, min = 0.15, max = 0.2)
-  A[,4] = 1 - A[,1] - A[,2] - A[,3]
 
   A = rdirichlet(n,c(alpha*rep(1,q-1),beta))
 

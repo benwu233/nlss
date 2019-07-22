@@ -1,13 +1,13 @@
 #' @title Heatmaps for Networks
 #' @description The function plots heatmaps for single or multiple network(s).
 #'
-#' @param S a matrix, each row represents a vectorized weighted adjacency matrix
-#' @param lim a 2-dimentional vector specifying the limits for the data
-#' @param community a vector represents the community each node belongs to
-#' @param color colorbar for the heatmap
-#' @param legend type of the legend, it can be NULL (no legend), "FC" (a symmetric, functional-connectivity-type legend) or "SC" (a asymmetric, structural-connectivity-type legend)
+#' @param S a matrix with each row representing a vectorized weighted adjacency matrix.
+#' @param lim a 2-dimentional vector specifying the limits for the data,
+#' @param community a vector represents the community each node belongs to.
+#' @param color colorbar for the heatmap,
+#' @param legend type of the legend, it can be NULL (no legend), "FC" (a symmetric, functional-connectivity-type legend) or "SC" (a asymmetric, structural-connectivity-type legend).
 #' @param path the path that heatmaps will be stored at, ended with a "/" or "\".
-#' @param filename names for heatmaps
+#' @param filename names for heatmaps.
 #'
 #' @return
 #' @export
