@@ -60,17 +60,85 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// DLSS_logLik_noise
-double DLSS_logLik_noise(NumericMatrix X, NumericMatrix S, NumericMatrix A, int K);
-RcppExport SEXP _nlss_DLSS_logLik_noise(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
+// NLSS_logLik_noise
+double NLSS_logLik_noise(NumericMatrix X, NumericMatrix A, NumericMatrix beta, IntegerVector group, int K, int G);
+RcppExport SEXP _nlss_NLSS_logLik_noise(SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP KSEXP, SEXP GSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    rcpp_result_gen = Rcpp::wrap(NLSS_logLik_noise(X, A, beta, group, K, G));
+    return rcpp_result_gen;
+END_RCPP
+}
+// NLSS_logLik_noise_group
+double NLSS_logLik_noise_group(NumericMatrix X, NumericMatrix A, NumericMatrix beta, IntegerVector group, int g0, int K, int G);
+RcppExport SEXP _nlss_NLSS_logLik_noise_group(SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP g0SEXP, SEXP KSEXP, SEXP GSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< int >::type g0(g0SEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    rcpp_result_gen = Rcpp::wrap(NLSS_logLik_noise_group(X, A, beta, group, g0, K, G));
+    return rcpp_result_gen;
+END_RCPP
+}
+// DLSS_logLik_noise_1
+double DLSS_logLik_noise_1(NumericMatrix X, NumericMatrix S, NumericMatrix A, NumericMatrix beta, IntegerVector group, int K, int G);
+RcppExport SEXP _nlss_DLSS_logLik_noise_1(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP KSEXP, SEXP GSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
     Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(DLSS_logLik_noise(X, S, A, K));
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    rcpp_result_gen = Rcpp::wrap(DLSS_logLik_noise_1(X, S, A, beta, group, K, G));
+    return rcpp_result_gen;
+END_RCPP
+}
+// DLSS_logLik_noise0_group
+double DLSS_logLik_noise0_group(NumericMatrix X, NumericMatrix S, NumericMatrix A, IntegerVector group, int g0, int K, int G);
+RcppExport SEXP _nlss_DLSS_logLik_noise0_group(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP groupSEXP, SEXP g0SEXP, SEXP KSEXP, SEXP GSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< int >::type g0(g0SEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    rcpp_result_gen = Rcpp::wrap(DLSS_logLik_noise0_group(X, S, A, group, g0, K, G));
+    return rcpp_result_gen;
+END_RCPP
+}
+// DLSS_logLik_noise0
+double DLSS_logLik_noise0(NumericMatrix X, NumericMatrix S, NumericMatrix A, NumericMatrix beta, int K);
+RcppExport SEXP _nlss_DLSS_logLik_noise0(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP KSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    rcpp_result_gen = Rcpp::wrap(DLSS_logLik_noise0(X, S, A, beta, K));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -92,36 +160,73 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// parallelDLSS_update_S_n
-void parallelDLSS_update_S_n(NumericVector S, NumericVector loglik, NumericVector X, NumericVector A, NumericVector beta, NumericVector u, IntegerVector sampS_star, int q, int p, int K, int n);
-RcppExport SEXP _nlss_parallelDLSS_update_S_n(SEXP SSEXP, SEXP loglikSEXP, SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP uSEXP, SEXP sampS_starSEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP nSEXP) {
+// parallelDLSS_update_Y_n_z
+void parallelDLSS_update_Y_n_z(NumericVector Y, NumericVector X, NumericVector S, NumericVector seed, int q, int p, int n, int K, double alpha_1, double alpha_0);
+RcppExport SEXP _nlss_parallelDLSS_update_Y_n_z(SEXP YSEXP, SEXP XSEXP, SEXP SSEXP, SEXP seedSEXP, SEXP qSEXP, SEXP pSEXP, SEXP nSEXP, SEXP KSEXP, SEXP alpha_1SEXP, SEXP alpha_0SEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha_1(alpha_1SEXP);
+    Rcpp::traits::input_parameter< double >::type alpha_0(alpha_0SEXP);
+    parallelDLSS_update_Y_n_z(Y, X, S, seed, q, p, n, K, alpha_1, alpha_0);
+    return R_NilValue;
+END_RCPP
+}
+// update_S_n
+void update_S_n(NumericVector S, NumericVector X, NumericVector A, NumericVector beta, IntegerVector group, int q, int p, int K, int G, int n);
+RcppExport SEXP _nlss_update_S_n(SEXP SSEXP, SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type loglik(loglikSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
     Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type u(uSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type sampS_star(sampS_starSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
     Rcpp::traits::input_parameter< int >::type q(qSEXP);
     Rcpp::traits::input_parameter< int >::type p(pSEXP);
     Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    parallelDLSS_update_S_n(S, loglik, X, A, beta, u, sampS_star, q, p, K, n);
+    update_S_n(S, X, A, beta, group, q, p, K, G, n);
+    return R_NilValue;
+END_RCPP
+}
+// update_S_n_z
+void update_S_n_z(NumericVector S, NumericVector X, NumericVector Y, NumericVector beta, IntegerVector group, int q, int p, int K, int G, int n);
+RcppExport SEXP _nlss_update_S_n_z(SEXP SSEXP, SEXP XSEXP, SEXP YSEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    update_S_n_z(S, X, Y, beta, group, q, p, K, G, n);
     return R_NilValue;
 END_RCPP
 }
 // parallelDLSS_update_A_n
-void parallelDLSS_update_A_n(NumericVector A, NumericVector X, NumericVector Y, int alpha_1, int alpha_0, int q, int p, int n, NumericVector seed, NumericVector seed2);
+void parallelDLSS_update_A_n(NumericVector A, NumericVector X, NumericVector Y, double alpha_1, double alpha_0, int q, int p, int n, NumericVector seed, NumericVector seed2);
 RcppExport SEXP _nlss_parallelDLSS_update_A_n(SEXP ASEXP, SEXP XSEXP, SEXP YSEXP, SEXP alpha_1SEXP, SEXP alpha_0SEXP, SEXP qSEXP, SEXP pSEXP, SEXP nSEXP, SEXP seedSEXP, SEXP seed2SEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
     Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< int >::type alpha_1(alpha_1SEXP);
-    Rcpp::traits::input_parameter< int >::type alpha_0(alpha_0SEXP);
+    Rcpp::traits::input_parameter< double >::type alpha_1(alpha_1SEXP);
+    Rcpp::traits::input_parameter< double >::type alpha_0(alpha_0SEXP);
     Rcpp::traits::input_parameter< int >::type q(qSEXP);
     Rcpp::traits::input_parameter< int >::type p(pSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
@@ -131,20 +236,43 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// DLSS_gibbs_sampler_n
-Rcpp::List DLSS_gibbs_sampler_n(NumericVector X, NumericVector A0, NumericVector gamma, IntegerVector alpha, int total_iter, int burn_in, int show_step);
-RcppExport SEXP _nlss_DLSS_gibbs_sampler_n(SEXP XSEXP, SEXP A0SEXP, SEXP gammaSEXP, SEXP alphaSEXP, SEXP total_iterSEXP, SEXP burn_inSEXP, SEXP show_stepSEXP) {
+// update_beta_n
+void update_beta_n(NumericVector beta, NumericVector S, IntegerVector group, double beta_0, int q, int p, int K, int G);
+RcppExport SEXP _nlss_update_beta_n(SEXP betaSEXP, SEXP SSEXP, SEXP groupSEXP, SEXP beta_0SEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< double >::type beta_0(beta_0SEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    update_beta_n(beta, S, group, beta_0, q, p, K, G);
+    return R_NilValue;
+END_RCPP
+}
+// NLSS_gibbs_sampler_n
+Rcpp::List NLSS_gibbs_sampler_n(NumericVector X, NumericVector A0, NumericVector S0, NumericVector Y0, NumericVector beta0, IntegerVector group, double gamma, NumericVector alpha, int kk, int total_iter, int burn_in, int thin, int show_step);
+RcppExport SEXP _nlss_NLSS_gibbs_sampler_n(SEXP XSEXP, SEXP A0SEXP, SEXP S0SEXP, SEXP Y0SEXP, SEXP beta0SEXP, SEXP groupSEXP, SEXP gammaSEXP, SEXP alphaSEXP, SEXP kkSEXP, SEXP total_iterSEXP, SEXP burn_inSEXP, SEXP thinSEXP, SEXP show_stepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type A0(A0SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type gamma(gammaSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type S0(S0SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Y0(Y0SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta0(beta0SEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< int >::type kk(kkSEXP);
     Rcpp::traits::input_parameter< int >::type total_iter(total_iterSEXP);
     Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
+    Rcpp::traits::input_parameter< int >::type thin(thinSEXP);
     Rcpp::traits::input_parameter< int >::type show_step(show_stepSEXP);
-    rcpp_result_gen = Rcpp::wrap(DLSS_gibbs_sampler_n(X, A0, gamma, alpha, total_iter, burn_in, show_step));
+    rcpp_result_gen = Rcpp::wrap(NLSS_gibbs_sampler_n(X, A0, S0, Y0, beta0, group, gamma, alpha, kk, total_iter, burn_in, thin, show_step));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -154,11 +282,18 @@ static const R_CallMethodDef CallEntries[] = {
     {"_nlss_Simu_data_bi", (DL_FUNC) &_nlss_Simu_data_bi, 4},
     {"_nlss_DLSS_Deviance_c", (DL_FUNC) &_nlss_DLSS_Deviance_c, 4},
     {"_nlss_DLSS_logLik_noisefree", (DL_FUNC) &_nlss_DLSS_logLik_noisefree, 4},
-    {"_nlss_DLSS_logLik_noise", (DL_FUNC) &_nlss_DLSS_logLik_noise, 4},
+    {"_nlss_NLSS_logLik_noise", (DL_FUNC) &_nlss_NLSS_logLik_noise, 6},
+    {"_nlss_NLSS_logLik_noise_group", (DL_FUNC) &_nlss_NLSS_logLik_noise_group, 7},
+    {"_nlss_DLSS_logLik_noise_1", (DL_FUNC) &_nlss_DLSS_logLik_noise_1, 7},
+    {"_nlss_DLSS_logLik_noise0_group", (DL_FUNC) &_nlss_DLSS_logLik_noise0_group, 7},
+    {"_nlss_DLSS_logLik_noise0", (DL_FUNC) &_nlss_DLSS_logLik_noise0, 5},
     {"_nlss_parallelDLSS_update_Y_n", (DL_FUNC) &_nlss_parallelDLSS_update_Y_n, 9},
-    {"_nlss_parallelDLSS_update_S_n", (DL_FUNC) &_nlss_parallelDLSS_update_S_n, 11},
+    {"_nlss_parallelDLSS_update_Y_n_z", (DL_FUNC) &_nlss_parallelDLSS_update_Y_n_z, 10},
+    {"_nlss_update_S_n", (DL_FUNC) &_nlss_update_S_n, 10},
+    {"_nlss_update_S_n_z", (DL_FUNC) &_nlss_update_S_n_z, 10},
     {"_nlss_parallelDLSS_update_A_n", (DL_FUNC) &_nlss_parallelDLSS_update_A_n, 10},
-    {"_nlss_DLSS_gibbs_sampler_n", (DL_FUNC) &_nlss_DLSS_gibbs_sampler_n, 7},
+    {"_nlss_update_beta_n", (DL_FUNC) &_nlss_update_beta_n, 8},
+    {"_nlss_NLSS_gibbs_sampler_n", (DL_FUNC) &_nlss_NLSS_gibbs_sampler_n, 13},
     {NULL, NULL, 0}
 };
 

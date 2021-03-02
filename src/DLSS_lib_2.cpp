@@ -10,6 +10,8 @@ using namespace Rcpp;
 //   http://adv-r.had.co.nz/Rcpp.html
 //   http://gallery.rcpp.org/
 //
+
+
 // [[Rcpp::export]]
 NumericMatrix Simu_DLSS(NumericMatrix S,NumericMatrix A, int K){
   Rcpp::Dimension S_dim = S.attr("dim");
@@ -179,10 +181,8 @@ double DLSS_logLik_noisefree(NumericMatrix X,NumericMatrix S,NumericMatrix A, in
 
 }
 
-
-
 // [[Rcpp::export]]
-double DLSS_logLik_noise(NumericMatrix X,NumericMatrix S,NumericMatrix A, int K){
+double NLSS_logLik_noise(NumericMatrix X,NumericMatrix A,NumericMatrix beta,IntegerVector group, int K, int G){
   Rcpp::Dimension X_dim = X.attr("dim");
   Rcpp::Dimension A_dim = A.attr("dim");
 
@@ -192,24 +192,226 @@ double DLSS_logLik_noise(NumericMatrix X,NumericMatrix S,NumericMatrix A, int K)
 
   double out = 0;
   double prob = 0;
+  int k = 0;
+  int g = 0;
+
+  for(int j=0; j<p; j++){
+    for(int i=0; i<n; i++){
+
+      prob = A(i,q-1)/K;
+
+      for(int h=0 ; h<(q-1); h++){
+
+        g = group[j];
+        k = (int)(X(i,j) - 1 + 1e-20);
+        prob += A(i,h) * beta(h+g*(q-1),k);
+
+      }
+      out += log(prob);
+    }
+
+  }
+
+  return out;
+}
+
+
+
+// [[Rcpp::export]]
+double NLSS_logLik_noise_group(NumericMatrix X,NumericMatrix A,NumericMatrix beta,IntegerVector group, int g0, int K, int G){
+  Rcpp::Dimension X_dim = X.attr("dim");
+  Rcpp::Dimension A_dim = A.attr("dim");
+
+  int n = X_dim[0];
+  int p = X_dim[1];
+  int q = A_dim[1];
+
+  double out = 0;
+  double prob = 0;
+  int k = 0;
+  int g = 0;
+
+  for(int j=0; j<p; j++){
+
+    g = group[j];
+    if(g==g0){
+    for(int i=0; i<n; i++){
+
+      prob = A(i,q-1)/K;
+
+      for(int h=0 ; h<(q-1); h++){
+          k = (int)(X(i,j) - 1 + 1e-20);
+          prob += A(i,h) * beta(h+g*(q-1),k);
+      }
+      if(prob > 0){
+        out += log(prob);
+      }
+
+    }
+    }
+
+  }
+
+  return out;
+}
+
+// [[Rcpp::export]]
+double DLSS_logLik_noise_1(NumericMatrix X,NumericMatrix S,NumericMatrix A,NumericMatrix beta,IntegerVector group, int K, int G){
+  Rcpp::Dimension X_dim = X.attr("dim");
+  Rcpp::Dimension A_dim = A.attr("dim");
+  Rcpp::Dimension S_dim = S.attr("dim");
+
+  int n = X_dim[0];
+  int p = X_dim[1];
+  int q = S_dim[0];
+
+  double out = 0;
+  double prob = 0;
+  double count = 0;
+  int k = 0;
+  int g = 0;
+
+  for(int j=0; j<p; j++){
+    for(int i=0; i<n; i++){
+
+      k = (int)(X(i,j) - 1 + 1e-20);
+      prob = A(i,q+k)/K;
+
+      for(int h=0 ; h<q; h++){
+
+        g = group[j];
+        prob += A(i,h) * beta(h+g*q,k);
+
+      }
+
+
+      out += log(prob + 1e-20);
+    }
+
+  }
+
+  return out;
+}
+
+
+// [[Rcpp::export]]
+double DLSS_logLik_noise0_group(NumericMatrix X,NumericMatrix S,NumericMatrix A,IntegerVector group, int g0, int K, int G){
+  Rcpp::Dimension X_dim = X.attr("dim");
+  Rcpp::Dimension A_dim = A.attr("dim");
+
+  int n = X_dim[0];
+  int p = X_dim[1];
+  int q = A_dim[1];
+
+  double out = 0;
+  double prob = 0;
+  double count = 0;
+  int g = 0;
 
   for(int k=0; k<K; k++){
+
     for(int j=0; j<p; j++){
-      for(int i=0; i<n; i++){
-        if( X(i,j)==(k+1) ){
-          prob = A(i,q-1)/K;
-          for(int h=0 ; h<(q-1); h++){
-            if( S(h,j)==(k+1) ){
-              prob += A(i,h);
+
+      g=group[j];
+
+      if(g==g0){
+
+        for(int i=0; i<n; i++){
+          if( X(i,j)==(k+1) ){
+            prob = A(i,q-1)/K;
+            for(int h=0 ; h<(q-1); h++){
+
+              if( S(h,j)==(k+1) ){
+                prob += A(i,h);
+              }
+
             }
+            out += log(prob + 1e-20);
           }
-          out += log(prob + 1e-20);
+        }
+
+      }
+
+
+
+
+    }
+
+  }
+
+  /*
+  for(int l = 0; l < (q-1); l++){
+    for(int k = 0; k < K; k++){
+      count  = 0;
+      for(int j = 0; j < p; j++){
+        if(S(l,j)==(k+1)){
+          count ++;
         }
       }
+
+      out += count * log(beta(l,k)+ 1e-20);
     }
   }
+
+*/
 
   return out;
 
 }
 
+
+
+// [[Rcpp::export]]
+double DLSS_logLik_noise0(NumericMatrix X,NumericMatrix S,NumericMatrix A,NumericMatrix beta, int K){
+  Rcpp::Dimension X_dim = X.attr("dim");
+  Rcpp::Dimension A_dim = A.attr("dim");
+
+  int n = X_dim[0];
+  int p = X_dim[1];
+  int q = A_dim[1];
+
+  double out = 0;
+  double prob = 0;
+  double count = 0;
+
+  for(int k=0; k<K; k++){
+
+    for(int j=0; j<p; j++){
+
+      for(int i=0; i<n; i++){
+        if( X(i,j)==(k+1) ){
+          prob = A(i,q-1)/K;
+          for(int h=0 ; h<(q-1); h++){
+
+            if( S(h,j)==(k+1) ){
+              prob += A(i,h);
+            }
+
+          }
+          out += log(prob + 1e-20);
+        }
+      }
+
+    }
+
+  }
+
+  /*
+   for(int l = 0; l < (q-1); l++){
+   for(int k = 0; k < K; k++){
+   count  = 0;
+   for(int j = 0; j < p; j++){
+   if(S(l,j)==(k+1)){
+   count ++;
+   }
+   }
+
+   out += count * log(beta(l,k)+ 1e-20);
+   }
+   }
+
+   */
+
+  return out;
+
+}

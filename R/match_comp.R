@@ -17,6 +17,6 @@ match_rows = function(Slist){
   for(i in 2:length(Slist)){
     Slist_out[[i]] = Slist[[i]][compute.match.idx.s.tra2(Slist[[i]],S0),]
   }
-
   return(Slist_out)
 }
+

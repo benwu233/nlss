@@ -10,9 +10,54 @@
 #' @examples
 #' x = matrix(rnorm(36),nrow = 6)
 #' vec_mat(x)
+#' @export
 vec_mat = function(x){
 
   if(class(x)=="matrix"){
+    #
+    # n = nrow(x)*(nrow(x) -1)/2
+    # out = rep(NA,n)
+    # tag = 1
+    # for(i in 1:(nrow(x)-1) ){
+    #   for(j in (i+1):ncol(x)){
+    #     out[tag] = x[i,j]
+    #     tag = tag + 1
+    #   }
+    # }
+    out = x[lower.tri(x,diag=FALSE)]
+  }
+  else if(class(x)=="numeric"){
+    n = (1 + sqrt(1+8*length(x))) / 2
+    out = matrix(0,ncol = n, nrow = n)
+    # tag = 1
+    # for(i in 1:(n-1) ){
+    #   for(j in (i+1):n){
+    #     out[i,j] = x[tag]
+    #     tag = tag + 1
+    #   }
+    # }
+    #
+    # diag(out) = 0
+    # for(i in 2:n){
+    #   for(j in 1:(i-1) ){
+    #     out[i,j] = out[j,i]
+    #   }
+    # }
+
+    out[lower.tri(out,diag=FALSE)] = x
+
+    out = out + t(out)
+  }
+
+  return(out)
+}
+
+
+#' @export
+vec_mat0 = function(x){
+
+  if(class(x)=="matrix"){
+
     n = nrow(x)*(nrow(x) -1)/2
     out = rep(NA,n)
     tag = 1
@@ -22,6 +67,7 @@ vec_mat = function(x){
         tag = tag + 1
       }
     }
+    #out = x[upper.tri(x,diag=FALSE)]
   }
   else if(class(x)=="numeric"){
     n = (1 + sqrt(1+8*length(x))) / 2
@@ -40,7 +86,12 @@ vec_mat = function(x){
         out[i,j] = out[j,i]
       }
     }
+
+    #out[upper.tri(out,diag=FALSE)] = x
+
+   # out = out + t(out)
   }
 
   return(out)
 }
+

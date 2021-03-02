@@ -11,6 +11,7 @@
 #' @importFrom stats lm
 #'
 #' @examples
+#' @export
 connICA = function(data,q){
   Ss = matrix(0,nrow = ncol(data), ncol = q*100)
   for(i in 1:100){

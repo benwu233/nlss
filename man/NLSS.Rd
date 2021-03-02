@@ -4,11 +4,20 @@
 \alias{NLSS}
 \title{MCMC sampling for NLSS}
 \usage{
-NLSS(data, q = 2, total_iter = 1000, burn_in = 500,
-  show_step = 100)
+NLSS(
+  data,
+  q = 2,
+  kk = 1,
+  group_node = NULL,
+  init = list(S = NULL, A = NULL, beta = NULL),
+  total_iter = 1000,
+  burn_in = 500,
+  thin = 10,
+  show_step = 100
+)
 }
 \arguments{
-\item{data}{a n*p matrix with discrete value entries, n is the sample size, p is the num of node pairs,}
+\item{data}{a n*p matrix with discrete values, n is the sample size, p is the num of node pairs.}
 
 \item{q}{the number of latent sources.}
 
@@ -16,7 +25,7 @@ NLSS(data, q = 2, total_iter = 1000, burn_in = 500,
 
 \item{burn_in}{the number of iterations to be discarded as burn-in.}
 
-\item{show_step}{the number of iterations as a gap between two consecutive prints for monitoring the algorithm.}
+\item{show_step}{the frequency for printing the current number of iterations.}
 }
 \value{
 a R list containing the following terms:
@@ -29,5 +38,5 @@ in the MCMC samples.}
 }
 }
 \description{
-The function conducts MCMC sampling for a NLSS model. The number of latent sources need to be specified.
+The function conducts MCMC sampling for the NLSS model. The number of latent sources need to be specified.
 }

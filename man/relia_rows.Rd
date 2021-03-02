@@ -4,7 +4,7 @@
 \alias{relia_rows}
 \title{Reliability of sources}
 \usage{
-relia_rows(Slist)
+relia_rows(Slist, conn_only = TRUE)
 }
 \arguments{
 \item{Slist}{a list of matrices with rows representing vectorization of latent sources.}
