@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // Simu_DLSS
 NumericMatrix Simu_DLSS(NumericMatrix S, NumericMatrix A, int K);
 RcppExport SEXP _nlss_Simu_DLSS(SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
@@ -276,6 +281,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cal_beta_coef
+NumericVector cal_beta_coef(NumericVector S, int K);
+RcppExport SEXP _nlss_cal_beta_coef(SEXP SSEXP, SEXP KSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    rcpp_result_gen = Rcpp::wrap(cal_beta_coef(S, K));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_nlss_Simu_DLSS", (DL_FUNC) &_nlss_Simu_DLSS, 3},
@@ -294,6 +311,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_nlss_parallelDLSS_update_A_n", (DL_FUNC) &_nlss_parallelDLSS_update_A_n, 10},
     {"_nlss_update_beta_n", (DL_FUNC) &_nlss_update_beta_n, 8},
     {"_nlss_NLSS_gibbs_sampler_n", (DL_FUNC) &_nlss_NLSS_gibbs_sampler_n, 13},
+    {"_nlss_cal_beta_coef", (DL_FUNC) &_nlss_cal_beta_coef, 2},
     {NULL, NULL, 0}
 };
 

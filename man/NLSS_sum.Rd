@@ -4,7 +4,7 @@
 \alias{NLSS_sum}
 \title{Summary of the MCMC result for NLSS}
 \usage{
-NLSS_sum(res)
+NLSS_sum(res, nstart = 1, nend = 1)
 }
 \arguments{
 \item{res}{result from the function NLSS}

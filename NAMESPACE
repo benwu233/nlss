@@ -2,6 +2,7 @@
 
 export(NLSS)
 export(NLSS_sum)
+export(NLSS_sum_old)
 export(connICA)
 export(heatmap.net)
 export(heatmap.net.new)

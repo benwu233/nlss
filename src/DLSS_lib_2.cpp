@@ -201,15 +201,12 @@ double NLSS_logLik_noise(NumericMatrix X,NumericMatrix A,NumericMatrix beta,Inte
       prob = A(i,q-1)/K;
 
       for(int h=0 ; h<(q-1); h++){
-
         g = group[j];
         k = (int)(X(i,j) - 1 + 1e-20);
         prob += A(i,h) * beta(h+g*(q-1),k);
-
       }
       out += log(prob);
     }
-
   }
 
   return out;

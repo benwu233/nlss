@@ -65,3 +65,7 @@ NLSS_gibbs_sampler_n <- function(X, A0, S0, Y0, beta0, group, gamma, alpha, kk, 
     .Call('_nlss_NLSS_gibbs_sampler_n', PACKAGE = 'nlss', X, A0, S0, Y0, beta0, group, gamma, alpha, kk, total_iter, burn_in, thin, show_step)
 }
 
+cal_beta_coef <- function(S, K) {
+    .Call('_nlss_cal_beta_coef', PACKAGE = 'nlss', S, K)
+}
+

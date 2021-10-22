@@ -91,13 +91,13 @@ NLSS = function(data, q=2, kk=1, group_node=NULL,init = list(S=NULL,A=NULL,beta=
   res = NLSS_gibbs_sampler_n(X=X0, A0 =A0, S0 = S0, Y0=Y0, beta0 = beta0,group = group,gamma = gamma0,alpha = alpha0 , kk=kk,total_iter = total_iter, burn_in = burn_in, thin =thin, show_step = show_step)
 
   res$group = group
-  sum_res = NLSS_sum(res)
+  #sum_res = NLSS_sum(res)
 
-  out = list()
-  out$res = res
-  out$sum_res = sum_res
+  #out = list()
+  #out$res = res
+  #out$sum_res = sum_res
 
-  return(out)
+  return(res)
 }
 
 

@@ -784,33 +784,32 @@ Rcpp::List NLSS_gibbs_sampler_n(NumericVector X,NumericVector A0, NumericVector 
   for(int iter=1; iter<=total_iter; iter++){
 
     //start = std::clock();
-
+/*
     if((iter-burn_in)%kk==0){
       update_S_n(S, X, A, beta, group, q, p, K, G, n);
     }else{
       update_S_n_z(S, X, Y, beta, group, q, p, K, G, n);
     }
+*/
 
-
-    //update_S_n_z(S, X, Y, beta, group, q, p, K, G, n);
-
-    //update_S_n_z(S, X, Y, beta, group, q, p, K, G, n);
-    //duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    //std::cout<<"printf: beta: "<< duration <<'\n';
-
-    //std::cout<<"printf: beta: " <<'\n';
-
-      parallelDLSS_update_Y_n(Y, X, A, S, seed, q, p, n,K);
-    //  parallelDLSS_update_Y_n_z(Y, X,  S, seed, q, p, n,K,alpha[0],alpha[1]);
-
-    //if(iter > burn_in/2){
-      parallelDLSS_update_A_n(A, X, Y, alpha[0],alpha[1], q, p, n, seed, seed2);
-    //}
-
-
+    update_S_n_z(S, X, Y, beta, group, q, p, K, G, n);
+    parallelDLSS_update_Y_n(Y, X, A, S, seed, q, p, n,K);
+    parallelDLSS_update_A_n(A, X, Y, alpha[0],alpha[1], q, p, n, seed, seed2);
     update_beta_n(beta,S, group, gamma, q, p, K,G);
 
+    /*
+    if(iter < burn_in){
 
+      // parallelDLSS_update_Y_n_z(Y, X,  S, seed, q, p, n,K,alpha[0],alpha[1]);
+    }
+    else{
+
+      update_S_n(S, X, A, beta, group, q, p, K, G, n);
+      parallelDLSS_update_Y_n(Y, X, A, S, seed, q, p, n,K);
+
+    }
+
+*/
     if( (iter > burn_in)&&( (iter-burn_in)%thin==0 ) ){
       //copy A_trace
       for(int i=0;i<n;i++){
@@ -841,7 +840,6 @@ Rcpp::List NLSS_gibbs_sampler_n(NumericVector X,NumericVector A0, NumericVector 
       end = std::chrono::system_clock::now();
       end_time = std::chrono::system_clock::to_time_t(end);
       std::cout << "iter " << iter  << " " <<  std::ctime(&end_time) << std::endl;
-      //std::cout << lr << " " << 1.0*count0/p << std::endl;
     }
   }
 
@@ -851,4 +849,25 @@ Rcpp::List NLSS_gibbs_sampler_n(NumericVector X,NumericVector A0, NumericVector 
                             Named("Y") = Y,
                             Named("K")=K
                             );
+}
+
+
+// [[Rcpp::export]]
+NumericVector cal_beta_coef(NumericVector S, int K){
+  Rcpp::Dimension out_dim = S.attr("dim");
+  NumericVector out(out_dim);
+
+  int q = out_dim[0];
+  int p = out_dim[1];
+  int n = out_dim[2];
+
+  for(int i = 0; i < q; i++){
+    for(int j = 0; j < p; j++){
+      for(int k = 0; k < n; k++){
+
+
+      }
+    }
+  }
+
 }
