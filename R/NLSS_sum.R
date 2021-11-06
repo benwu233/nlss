@@ -133,19 +133,27 @@ NLSS_sum_old = function(res, nstart = 1, nend = 1){
 #' @export
 #'
 #' @examples
-log_lik_A = function(X,res,res_sum,start=1,end=2,K){
+log_lik_A = function(X,res,start=1,end=2,K){
 
   out = rep(0,end-start+1)
   tag = 1
   #A1 = res_sum$A
-  G0 = max(res$group)+1
   for(i in start:end){
+
+    print(i)
     S1 = res$S[,,i]
     beta1 = res$beta[,,i]
     A1 = res$A[,,i]
-    out[tag] = DLSS_logLik_noise0(X,S1,A1,beta1,K)
+    out[tag] = DLSS_logLik_noise0(X,S1,A1,K)
     tag = tag + 1
   }
+  return(out)
+}
+
+#' @export
+log_lik_A0 = function(X,S,A,K){
+
+  out = DLSS_logLik_noise0(X,S,A,K)
   return(out)
 }
 

@@ -359,7 +359,7 @@ double DLSS_logLik_noise0_group(NumericMatrix X,NumericMatrix S,NumericMatrix A,
 
 
 // [[Rcpp::export]]
-double DLSS_logLik_noise0(NumericMatrix X,NumericMatrix S,NumericMatrix A,NumericMatrix beta, int K){
+double DLSS_logLik_noise0(NumericMatrix X,NumericMatrix S,NumericMatrix A, int K){
   Rcpp::Dimension X_dim = X.attr("dim");
   Rcpp::Dimension A_dim = A.attr("dim");
 

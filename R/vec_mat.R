@@ -13,7 +13,7 @@
 #' @export
 vec_mat = function(x){
 
-  if(class(x)=="matrix"){
+  if(class(x)[1]=="matrix"){
     #
     # n = nrow(x)*(nrow(x) -1)/2
     # out = rep(NA,n)
@@ -26,7 +26,7 @@ vec_mat = function(x){
     # }
     out = x[lower.tri(x,diag=FALSE)]
   }
-  else if(class(x)=="numeric"){
+  else if(class(x)[1]=="numeric"){
     n = (1 + sqrt(1+8*length(x))) / 2
     out = matrix(0,ncol = n, nrow = n)
     # tag = 1

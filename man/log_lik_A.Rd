@@ -4,7 +4,7 @@
 \alias{log_lik_A}
 \title{Title}
 \usage{
-log_lik_A(X, res, res_sum, start = 1, end = 2, K)
+log_lik_A(X, res, start = 1, end = 2, K)
 }
 \arguments{
 \item{K}{}

@@ -89,7 +89,7 @@ sim_NLSS = function(n_node = 50, n = 40, alpha = 0.5, beta = 0.1 ){
 
 #' @export
 simnlss = function(A,S,K){
-  sim_X = Simu_DLSS(S+1,A,K) - 1
+  sim_X = Simu_DLSS(S,A,K)
   return(sim_X)
 }
 

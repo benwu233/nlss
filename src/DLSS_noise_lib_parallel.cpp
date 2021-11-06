@@ -327,7 +327,7 @@ struct UpdateS_n_z : public Worker {
               logprob[k + j0 * K] = log(beta[l0+g0*(q-1)+k*(q-1)*G] + 1e-200);
             }
 
-            maxprob = -1e300;
+            maxprob = logprob[0];
             for(int k = 0; k < K; k++){
               if(logprob[k] > maxprob){
                 maxprob = logprob[k];
@@ -643,7 +643,7 @@ void parallelDLSS_update_A_n(NumericVector A, NumericVector X, NumericVector Y, 
 
 // [[Rcpp::export]]
 void update_beta_n(NumericVector beta, NumericVector S, IntegerVector group,
-                        double beta_0, int q, int p, int K, int G){
+                        double beta_0, int q, int p, int K, int G, int itr){
 
   NumericVector seed(q*p);
   NumericVector seed2(K);
@@ -657,6 +657,7 @@ void update_beta_n(NumericVector beta, NumericVector S, IntegerVector group,
   double maxb = 0;
 
   for(int l=0; l < (q-1); l++){
+
 
     for(int g=0; g < G; g++){
 
@@ -675,7 +676,7 @@ void update_beta_n(NumericVector beta, NumericVector S, IntegerVector group,
 
       g0 = group[j];
 
-      b_l[ (int)(S[ind]+1e-20)-1 + g0*K ] += seed[ind];
+      b_l[ S[ind]-1 + g0*K ] += seed[ind];
 
     }
 
@@ -685,6 +686,7 @@ void update_beta_n(NumericVector beta, NumericVector S, IntegerVector group,
       for(int k=0; k<K; k++){
         sum_b_l += b_l[k + g*K];
       }
+
 
       for(int k=0; k<K; k++){
         beta[l+ g*(q-1)+ k*(q-1)*G] = b_l[k + g*K] / sum_b_l;
@@ -729,6 +731,7 @@ Rcpp::List NLSS_gibbs_sampler_n(NumericVector X,NumericVector A0, NumericVector 
   Rcpp::Dimension S_trace_dim(q-1,p,nchain);
 
   NumericVector S_trace(S_trace_dim);
+  NumericVector Y_trace(S_trace_dim);
 
   Rcpp::Dimension beta_trace_dim((q-1)*G,K,nchain);
   NumericVector beta_trace(beta_trace_dim);
@@ -792,10 +795,15 @@ Rcpp::List NLSS_gibbs_sampler_n(NumericVector X,NumericVector A0, NumericVector 
     }
 */
 
-    update_S_n_z(S, X, Y, beta, group, q, p, K, G, n);
-    parallelDLSS_update_Y_n(Y, X, A, S, seed, q, p, n,K);
-    parallelDLSS_update_A_n(A, X, Y, alpha[0],alpha[1], q, p, n, seed, seed2);
-    update_beta_n(beta,S, group, gamma, q, p, K,G);
+    //update_S_n_z(S, X, Y, beta, group, q, p, K, G, n);
+
+    update_S_n(S, X, A, beta, group, q, p, K, G, n);
+
+    //parallelDLSS_update_Y_n(Y, X, A, S, seed, q, p, n,K);
+
+    //parallelDLSS_update_A_n(A, X, Y, alpha[0],alpha[1], q, p, n, seed, seed2);
+
+    update_beta_n(beta,S, group, gamma, q, p, K,G, iter);
 
     /*
     if(iter < burn_in){
@@ -824,6 +832,12 @@ Rcpp::List NLSS_gibbs_sampler_n(NumericVector X,NumericVector A0, NumericVector 
         }
       }
 
+      for(int l=0;l<(q-1);l++){
+        for(int j=0; j<p; j++){
+          Y_trace[l+S_dim[0]*j+tag*S_dim[1]*S_dim[0]] = Y[l+S_dim[0]*j];
+        }
+      }
+
       //copy beta_trace
       for(int l=0;l<(q-1);l++){
         for(int g=0; g<G; g++){
@@ -846,28 +860,8 @@ Rcpp::List NLSS_gibbs_sampler_n(NumericVector X,NumericVector A0, NumericVector 
   return Rcpp::List::create(Named("X")=X, Named("A")=A_trace,
                             Named("S") = S_trace,
                             Named("beta") = beta_trace,
-                            Named("Y") = Y,
+                            Named("Y") = Y_trace,
                             Named("K")=K
                             );
 }
 
-
-// [[Rcpp::export]]
-NumericVector cal_beta_coef(NumericVector S, int K){
-  Rcpp::Dimension out_dim = S.attr("dim");
-  NumericVector out(out_dim);
-
-  int q = out_dim[0];
-  int p = out_dim[1];
-  int n = out_dim[2];
-
-  for(int i = 0; i < q; i++){
-    for(int j = 0; j < p; j++){
-      for(int k = 0; k < n; k++){
-
-
-      }
-    }
-  }
-
-}
