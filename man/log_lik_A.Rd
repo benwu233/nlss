@@ -9,9 +9,6 @@ log_lik_A(X, res, start = 1, end = 2, K)
 \arguments{
 \item{K}{}
 }
-\value{
-
-}
 \description{
 Title
 }

@@ -10,6 +10,170 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// update_S_seprt
+void update_S_seprt(NumericVector S, NumericVector X, NumericVector A, NumericVector beta, IntegerVector group, int q, int p, int K, int G, int n);
+RcppExport SEXP _nlss_update_S_seprt(SEXP SSEXP, SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    update_S_seprt(S, X, A, beta, group, q, p, K, G, n);
+    return R_NilValue;
+END_RCPP
+}
+// sum_subset2
+Rcpp::List sum_subset2(NumericMatrix a, int q, int n, int nonzero);
+RcppExport SEXP _nlss_sum_subset2(SEXP aSEXP, SEXP qSEXP, SEXP nSEXP, SEXP nonzeroSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type a(aSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type nonzero(nonzeroSEXP);
+    rcpp_result_gen = Rcpp::wrap(sum_subset2(a, q, n, nonzero));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sum_subset3
+Rcpp::NumericMatrix sum_subset3(NumericMatrix a, int q, int n, int nonzero);
+RcppExport SEXP _nlss_sum_subset3(SEXP aSEXP, SEXP qSEXP, SEXP nSEXP, SEXP nonzeroSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type a(aSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type nonzero(nonzeroSEXP);
+    rcpp_result_gen = Rcpp::wrap(sum_subset3(a, q, n, nonzero));
+    return rcpp_result_gen;
+END_RCPP
+}
+// update_S_joint
+void update_S_joint(NumericVector S, NumericVector X, NumericMatrix A, int q, int p, int K, int n, NumericMatrix Sspace, NumericMatrix stat_link, int ns, int sprs);
+RcppExport SEXP _nlss_update_S_joint(SEXP SSEXP, SEXP XSEXP, SEXP ASEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP nSEXP, SEXP SspaceSEXP, SEXP stat_linkSEXP, SEXP nsSEXP, SEXP sprsSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type Sspace(SspaceSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type stat_link(stat_linkSEXP);
+    Rcpp::traits::input_parameter< int >::type ns(nsSEXP);
+    Rcpp::traits::input_parameter< int >::type sprs(sprsSEXP);
+    update_S_joint(S, X, A, q, p, K, n, Sspace, stat_link, ns, sprs);
+    return R_NilValue;
+END_RCPP
+}
+// findmode_S
+void findmode_S(NumericVector S, NumericVector X, NumericVector A, NumericVector beta, IntegerVector group, int q, int p, int K, int G, int n);
+RcppExport SEXP _nlss_findmode_S(SEXP SSEXP, SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    findmode_S(S, X, A, beta, group, q, p, K, G, n);
+    return R_NilValue;
+END_RCPP
+}
+// update_A
+void update_A(NumericVector A, NumericVector X, NumericVector Y, double alpha_1, double alpha_0, int q, int p, int n, NumericVector seed, NumericVector seed2);
+RcppExport SEXP _nlss_update_A(SEXP ASEXP, SEXP XSEXP, SEXP YSEXP, SEXP alpha_1SEXP, SEXP alpha_0SEXP, SEXP qSEXP, SEXP pSEXP, SEXP nSEXP, SEXP seedSEXP, SEXP seed2SEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha_1(alpha_1SEXP);
+    Rcpp::traits::input_parameter< double >::type alpha_0(alpha_0SEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type seed2(seed2SEXP);
+    update_A(A, X, Y, alpha_1, alpha_0, q, p, n, seed, seed2);
+    return R_NilValue;
+END_RCPP
+}
+// update_Y
+void update_Y(NumericVector Y, NumericVector X, NumericVector A, NumericVector S, NumericVector seed, int q, int p, int n, int K);
+RcppExport SEXP _nlss_update_Y(SEXP YSEXP, SEXP XSEXP, SEXP ASEXP, SEXP SSEXP, SEXP seedSEXP, SEXP qSEXP, SEXP pSEXP, SEXP nSEXP, SEXP KSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    update_Y(Y, X, A, S, seed, q, p, n, K);
+    return R_NilValue;
+END_RCPP
+}
+// update_beta
+void update_beta(NumericVector beta, NumericVector S, IntegerVector group, double gamma_0, int q, int p, int K, int G);
+RcppExport SEXP _nlss_update_beta(SEXP betaSEXP, SEXP SSEXP, SEXP groupSEXP, SEXP gamma_0SEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
+    Rcpp::traits::input_parameter< double >::type gamma_0(gamma_0SEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type G(GSEXP);
+    update_beta(beta, S, group, gamma_0, q, p, K, G);
+    return R_NilValue;
+END_RCPP
+}
+// NLSS_gibbs_sampler
+Rcpp::List NLSS_gibbs_sampler(NumericVector X, NumericVector A0, NumericVector S0, NumericVector Y0, NumericMatrix stat_link, int joint, NumericVector alpha, NumericMatrix Sspace, int sprs, int K, int total_iter, int burn_in, int thin, int show_step);
+RcppExport SEXP _nlss_NLSS_gibbs_sampler(SEXP XSEXP, SEXP A0SEXP, SEXP S0SEXP, SEXP Y0SEXP, SEXP stat_linkSEXP, SEXP jointSEXP, SEXP alphaSEXP, SEXP SspaceSEXP, SEXP sprsSEXP, SEXP KSEXP, SEXP total_iterSEXP, SEXP burn_inSEXP, SEXP thinSEXP, SEXP show_stepSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type A0(A0SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type S0(S0SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Y0(Y0SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type stat_link(stat_linkSEXP);
+    Rcpp::traits::input_parameter< int >::type joint(jointSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type Sspace(SspaceSEXP);
+    Rcpp::traits::input_parameter< int >::type sprs(sprsSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type total_iter(total_iterSEXP);
+    Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
+    Rcpp::traits::input_parameter< int >::type thin(thinSEXP);
+    Rcpp::traits::input_parameter< int >::type show_step(show_stepSEXP);
+    rcpp_result_gen = Rcpp::wrap(NLSS_gibbs_sampler(X, A0, S0, Y0, stat_link, joint, alpha, Sspace, sprs, K, total_iter, burn_in, thin, show_step));
+    return rcpp_result_gen;
+END_RCPP
+}
 // Simu_DLSS
 NumericMatrix Simu_DLSS(NumericMatrix S, NumericMatrix A, int K);
 RcppExport SEXP _nlss_Simu_DLSS(SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
@@ -146,143 +310,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// parallelDLSS_update_Y_n
-void parallelDLSS_update_Y_n(NumericVector Y, NumericVector X, NumericVector A, NumericVector S, NumericVector seed, int q, int p, int n, int K);
-RcppExport SEXP _nlss_parallelDLSS_update_Y_n(SEXP YSEXP, SEXP XSEXP, SEXP ASEXP, SEXP SSEXP, SEXP seedSEXP, SEXP qSEXP, SEXP pSEXP, SEXP nSEXP, SEXP KSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type seed(seedSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    parallelDLSS_update_Y_n(Y, X, A, S, seed, q, p, n, K);
-    return R_NilValue;
-END_RCPP
-}
-// parallelDLSS_update_Y_n_z
-void parallelDLSS_update_Y_n_z(NumericVector Y, NumericVector X, NumericVector S, NumericVector seed, int q, int p, int n, int K, double alpha_1, double alpha_0);
-RcppExport SEXP _nlss_parallelDLSS_update_Y_n_z(SEXP YSEXP, SEXP XSEXP, SEXP SSEXP, SEXP seedSEXP, SEXP qSEXP, SEXP pSEXP, SEXP nSEXP, SEXP KSEXP, SEXP alpha_1SEXP, SEXP alpha_0SEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type seed(seedSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< double >::type alpha_1(alpha_1SEXP);
-    Rcpp::traits::input_parameter< double >::type alpha_0(alpha_0SEXP);
-    parallelDLSS_update_Y_n_z(Y, X, S, seed, q, p, n, K, alpha_1, alpha_0);
-    return R_NilValue;
-END_RCPP
-}
-// update_S_n
-void update_S_n(NumericVector S, NumericVector X, NumericVector A, NumericVector beta, IntegerVector group, int q, int p, int K, int G, int n);
-RcppExport SEXP _nlss_update_S_n(SEXP SSEXP, SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP, SEXP nSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type G(GSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    update_S_n(S, X, A, beta, group, q, p, K, G, n);
-    return R_NilValue;
-END_RCPP
-}
-// update_S_n_z
-void update_S_n_z(NumericVector S, NumericVector X, NumericVector Y, NumericVector beta, IntegerVector group, int q, int p, int K, int G, int n);
-RcppExport SEXP _nlss_update_S_n_z(SEXP SSEXP, SEXP XSEXP, SEXP YSEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP, SEXP nSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type G(GSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    update_S_n_z(S, X, Y, beta, group, q, p, K, G, n);
-    return R_NilValue;
-END_RCPP
-}
-// parallelDLSS_update_A_n
-void parallelDLSS_update_A_n(NumericVector A, NumericVector X, NumericVector Y, double alpha_1, double alpha_0, int q, int p, int n, NumericVector seed, NumericVector seed2);
-RcppExport SEXP _nlss_parallelDLSS_update_A_n(SEXP ASEXP, SEXP XSEXP, SEXP YSEXP, SEXP alpha_1SEXP, SEXP alpha_0SEXP, SEXP qSEXP, SEXP pSEXP, SEXP nSEXP, SEXP seedSEXP, SEXP seed2SEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< double >::type alpha_1(alpha_1SEXP);
-    Rcpp::traits::input_parameter< double >::type alpha_0(alpha_0SEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type seed(seedSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type seed2(seed2SEXP);
-    parallelDLSS_update_A_n(A, X, Y, alpha_1, alpha_0, q, p, n, seed, seed2);
-    return R_NilValue;
-END_RCPP
-}
-// update_beta_n
-void update_beta_n(NumericVector beta, NumericVector S, IntegerVector group, double beta_0, int q, int p, int K, int G, int itr);
-RcppExport SEXP _nlss_update_beta_n(SEXP betaSEXP, SEXP SSEXP, SEXP groupSEXP, SEXP beta_0SEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP, SEXP itrSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< double >::type beta_0(beta_0SEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type G(GSEXP);
-    Rcpp::traits::input_parameter< int >::type itr(itrSEXP);
-    update_beta_n(beta, S, group, beta_0, q, p, K, G, itr);
-    return R_NilValue;
-END_RCPP
-}
-// NLSS_gibbs_sampler_n
-Rcpp::List NLSS_gibbs_sampler_n(NumericVector X, NumericVector A0, NumericVector S0, NumericVector Y0, NumericVector beta0, IntegerVector group, double gamma, NumericVector alpha, int kk, int total_iter, int burn_in, int thin, int show_step);
-RcppExport SEXP _nlss_NLSS_gibbs_sampler_n(SEXP XSEXP, SEXP A0SEXP, SEXP S0SEXP, SEXP Y0SEXP, SEXP beta0SEXP, SEXP groupSEXP, SEXP gammaSEXP, SEXP alphaSEXP, SEXP kkSEXP, SEXP total_iterSEXP, SEXP burn_inSEXP, SEXP thinSEXP, SEXP show_stepSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type A0(A0SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type S0(S0SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Y0(Y0SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type beta0(beta0SEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< int >::type kk(kkSEXP);
-    Rcpp::traits::input_parameter< int >::type total_iter(total_iterSEXP);
-    Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
-    Rcpp::traits::input_parameter< int >::type thin(thinSEXP);
-    Rcpp::traits::input_parameter< int >::type show_step(show_stepSEXP);
-    rcpp_result_gen = Rcpp::wrap(NLSS_gibbs_sampler_n(X, A0, S0, Y0, beta0, group, gamma, alpha, kk, total_iter, burn_in, thin, show_step));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_nlss_update_S_seprt", (DL_FUNC) &_nlss_update_S_seprt, 10},
+    {"_nlss_sum_subset2", (DL_FUNC) &_nlss_sum_subset2, 4},
+    {"_nlss_sum_subset3", (DL_FUNC) &_nlss_sum_subset3, 4},
+    {"_nlss_update_S_joint", (DL_FUNC) &_nlss_update_S_joint, 11},
+    {"_nlss_findmode_S", (DL_FUNC) &_nlss_findmode_S, 10},
+    {"_nlss_update_A", (DL_FUNC) &_nlss_update_A, 10},
+    {"_nlss_update_Y", (DL_FUNC) &_nlss_update_Y, 9},
+    {"_nlss_update_beta", (DL_FUNC) &_nlss_update_beta, 8},
+    {"_nlss_NLSS_gibbs_sampler", (DL_FUNC) &_nlss_NLSS_gibbs_sampler, 14},
     {"_nlss_Simu_DLSS", (DL_FUNC) &_nlss_Simu_DLSS, 3},
     {"_nlss_Simu_data_bi", (DL_FUNC) &_nlss_Simu_data_bi, 4},
     {"_nlss_DLSS_Deviance_c", (DL_FUNC) &_nlss_DLSS_Deviance_c, 4},
@@ -292,13 +330,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_nlss_DLSS_logLik_noise_1", (DL_FUNC) &_nlss_DLSS_logLik_noise_1, 7},
     {"_nlss_DLSS_logLik_noise0_group", (DL_FUNC) &_nlss_DLSS_logLik_noise0_group, 7},
     {"_nlss_DLSS_logLik_noise0", (DL_FUNC) &_nlss_DLSS_logLik_noise0, 4},
-    {"_nlss_parallelDLSS_update_Y_n", (DL_FUNC) &_nlss_parallelDLSS_update_Y_n, 9},
-    {"_nlss_parallelDLSS_update_Y_n_z", (DL_FUNC) &_nlss_parallelDLSS_update_Y_n_z, 10},
-    {"_nlss_update_S_n", (DL_FUNC) &_nlss_update_S_n, 10},
-    {"_nlss_update_S_n_z", (DL_FUNC) &_nlss_update_S_n_z, 10},
-    {"_nlss_parallelDLSS_update_A_n", (DL_FUNC) &_nlss_parallelDLSS_update_A_n, 10},
-    {"_nlss_update_beta_n", (DL_FUNC) &_nlss_update_beta_n, 9},
-    {"_nlss_NLSS_gibbs_sampler_n", (DL_FUNC) &_nlss_NLSS_gibbs_sampler_n, 13},
     {NULL, NULL, 0}
 };
 

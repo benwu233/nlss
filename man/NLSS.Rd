@@ -7,13 +7,14 @@
 NLSS(
   data,
   q = 2,
-  kk = 1,
-  group_node = NULL,
+  k0 = 2,
   init = list(S = NULL, A = NULL, beta = NULL),
   total_iter = 1000,
   burn_in = 500,
   thin = 10,
-  show_step = 100
+  show_step = 100,
+  sprs = 2,
+  joint = TRUE
 )
 }
 \arguments{

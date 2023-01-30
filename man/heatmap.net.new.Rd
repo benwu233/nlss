@@ -31,9 +31,6 @@ heatmap.net.new(
 
 \item{filename}{names for heatmaps.}
 }
-\value{
-
-}
 \description{
 The function plots heatmaps for single or multiple network(s).
 }

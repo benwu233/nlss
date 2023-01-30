@@ -9,189 +9,58 @@
 #'
 #' @examples
 #' @export
-NLSS_sum = function(res, nstart = 1, nend = 1){
-
-  mindata = min(res$X)
-  up = 0
-  while(mindata<=0){
-    mindata = mindata + 1
-    up = up + 1
-  }
+NLSS_sum = function(res, th=0.95, k0 = 0, nstart = 1, nend = 1){
 
   n = dim(res$A)[1]
-  #save_iters= dim(res$S)[3]
 
   n_itrs = nend - nstart + 1
 
   p = ncol(res$S)
   q = nrow(res$S)
 
-  temp = factor(res$S[,,nstart:nend],levels=1:res$K)
+  tmp = factor(res$S[,,nstart:nend],levels=1:res$K)
 
-  dim(temp) = dim(res$S[,,nstart:nend])
+  dim(tmp) = dim(res$S[,,nstart:nend])
 
+  beta_coef = apply(tmp,c(1,2),count_rate,res$K,n_itrs)
 
-  # beta_coef = array(0,dim=c(q,p,res$K))
-  # for(j in 1:p){
-  #   for(l in 1:q)
-  #     beta_coef[l,j,] = table(factor(temp[l,j,],levels=1:res$K))/n_itrs;
-  # }
+  S0 = apply(beta_coef,c(2,3),which.max)
 
-  beta_coef = apply(temp,c(1,2),count_rate,res$K,n_itrs)
+  S = S0
 
-  A_coef = apply(res$A[,,nstart:nend],c(1,2),mean)
+  pip = 1 - beta_coef[k0,,]
 
-  S = apply(beta_coef,c(2,3),which.max)
-  S = S - up
+  if(th==1){
+    th=1-1e-6
+  }
 
-  beta = apply(res$beta[,,nstart:nend],c(1,2),mean)
+  for(i in 1:q){
+    for(j in 1:p){
+      if(S[i,j]!=(k0) ){
+        if(beta_coef[S[i,j],i,j]<=th){
+          S[i,j] = k0
+        }
+      }
+    }
+  }
 
   loglik0 = rep(0,n_itrs)
-  G0 = max(res$group)+1
 
   for(i in 1:n_itrs){
     A1 = res$A[,,nstart+i-1]
-    beta1 = res$beta[,,nstart+i-1]
-    loglik0[i] = NLSS_logLik_noise(res$X,A1,beta1,res$group,res$K,G0)
+    S1 = res$S[,,nstart+i-1]
+
+    loglik0[i] = DLSS_logLik_noise0(res$X,S1,A1,res$K)
   }
 
-  return(list(A=A_coef,beta=beta,beta_coef = beta_coef, S = S, Y=res$Y, logLik = loglik0 ))
+  Amean = apply(res$A[,,nstart:nend],c(1,2),mean)
 
-}
+  loglik = DLSS_logLik_noise0(res$X,S,Amean,res$K)
+  BIC = -2 * loglik_S + log(dim(res$X)[1]*dim(res$X)[2])*sum(S!=k0)
 
+  return(list(A=Amean, S_mode =S0, S = S, Z=res$Y, pip = pip,
+              BIC=BIC, loglik = loglik, loglik_mcmc = loglik0))
 
-
-#' Title
-#'
-#' @param res
-#' @param nstart
-#' @param nend
-#'
-#' @return
-#' @export
-#'
-#' @examples
-NLSS_sum_old = function(res, nstart = 1, nend = 1){
-
-  mindata = min(res$X)
-  up = 0
-  while(mindata<=0){
-    mindata = mindata + 1
-    up = up + 1
-  }
-
-  n = dim(res$A)[1]
-  #save_iters= dim(res$S)[3]
-
-  n_itrs = nend - nstart + 1
-
-  p = ncol(res$S)
-  q = nrow(res$S)
-
-  temp = factor(res$S[,,nstart:nend],levels=1:res$K)
-
-  dim(temp) = dim(res$S[,,nstart:nend])
-
-  beta_coef = array(0,dim=c(q,p,res$K))
-  for(j in 1:p){
-    for(l in 1:q)
-      beta_coef[l,j,] = table(factor(temp[l,j,],levels=1:res$K))/n_itrs;
-  }
-
-  #beta_coef = apply(temp,c(1,2),count_rate,res$K,n_itrs)
-
-  A_coef = apply(res$A[,,nstart:nend],c(1,2),mean)
-
-  S = apply(beta_coef,c(1,2),which.max)
-  S = S - up
-
-  beta = apply(res$beta[,,nstart:nend],c(1,2),mean)
-
-  loglik0 = rep(0,n_itrs)
-  G0 = max(res$group)+1
-
-  for(i in 1:n_itrs){
-    A1 = res$A[,,nstart+i-1]
-    beta1 = res$beta[,,nstart+i-1]
-    loglik0[i] = NLSS_logLik_noise(res$X,A1,beta1,res$group,res$K,G0)
-  }
-
-  return(list(A=A_coef,beta=beta,beta_coef = beta_coef, S = S, Y=res$Y, logLik = loglik0 ))
-
-}
-
-#' Title
-#'
-#' @param X
-#' @param res
-#' @param res_sum
-#' @param start
-#' @param end
-#' @param K
-#'
-#' @return
-#' @export
-#'
-#' @examples
-log_lik_A = function(X,res,start=1,end=2,K){
-
-  out = rep(0,end-start+1)
-  tag = 1
-  #A1 = res_sum$A
-  for(i in start:end){
-
-    print(i)
-    S1 = res$S[,,i]
-    beta1 = res$beta[,,i]
-    A1 = res$A[,,i]
-    out[tag] = DLSS_logLik_noise0(X,S1,A1,K)
-    tag = tag + 1
-  }
-  return(out)
-}
-
-#' @export
-log_lik_A0 = function(X,S,A,K){
-
-  out = DLSS_logLik_noise0(X,S,A,K)
-  return(out)
-}
-
-#' @export
-log_lik_group = function(X,res,res_sum,g0,start=1,end=2,K){
-
-  out = rep(0,end-start+1)
-  tag = 1
-  A1 = res_sum$A
-  G0 = max(res$group)+1
-  for(i in start:end){
-    S1 = res$S[,,i]
-    beta1 = res$beta[,,i]
-    #A1 = res$A[,,i]
-    #out[tag] = NLSS_logLik_noise_group(X,A1,beta1,res$group,g0,K,G0)
-    out[tag] = DLSS_logLik_noise0_group(X,S1,A1,res$group,g0,K,G0)
-    tag = tag + 1
-  }
-  return(out)
-}
-
-
-
-#' @export
-log_lik_A_beta = function(X,res,res_sum,start=1,end=2,K){
-
-  out = rep(0,end-start+1)
-  tag = 1
-  #A1 = res_sum$A
-  G0 = max(res$group)+1
-  for(i in start:end){
-    S1 = res$S[,,i]
-    beta1 = res$beta[,,i]
-    A1 = res$A[,,i]
-    out[tag] = NLSS_logLik_noise(X,A1,beta1,res$group,K,G0)
-    tag = tag + 1
-  }
-  return(out)
 }
 
 

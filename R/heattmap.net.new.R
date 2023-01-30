@@ -126,7 +126,7 @@ heatmap.net.new.nolg = function(S,lim = c(min(S),max(S)),community = rep(1,(1 + 
       sidecolor[i] = sidecolor[i-1]
     }
   }
-  if(class(S)!="matrix"){
+  if(class(S)[1]!="matrix"){
     S = t( as.matrix(S) )
   }
 
@@ -141,12 +141,12 @@ heatmap.net.new.nolg = function(S,lim = c(min(S),max(S)),community = rep(1,(1 + 
     L = nrow(ad_S)
 
     while (dev.cur()>1) dev.off()
-    png(paste0(path,filename,"_",i,".png"),width = 1000, height = 850)
+    png(paste0(path,filename,"_",i,".png"),width = 850, height = 850)
     heatmap.2(ad_S,Rowv = NULL,Colv = NULL,trace="none", symbreaks = TRUE,
               labRow=NA,labCol=NA,dendrogram="none",RowSideColors = sidecolor, ColSideColors = sidecolor,
-              cexRow=1,cexCol=1,margins=c(1,1),col=color, breaks=seq(minS,maxS,h),
+              cexRow=1,cexCol=1,margins=c(0.1,0.1),col=color, breaks=seq(minS,maxS,h),
               colsep = colsep0, rowsep = colsep0, sepcolor="black",
-              key = F, lhei = c(0.75,3.5), lwid = c(1.5,3.55))
+              key = F, lhei = c(0.05,3.5), lwid = c(0.05,3.5))
 
     while (dev.cur()>1) dev.off()
   }

@@ -12,7 +12,7 @@
 relia_rows = function(Slist, conn_only=TRUE){
 
   S0 = Slist[[1]]
-  if(class(S0)!="matrix"){
+  if(class(S0)[1]!="matrix"){
     S0 = t(as.matrix(S0))
   }
 
@@ -29,7 +29,7 @@ relia_rows = function(Slist, conn_only=TRUE){
 
     for(j in 2:length(Slist) ){
       S1 = Slist[[j]]
-      if(class(S1)!="matrix"){
+      if(class(S1)[1]!="matrix"){
         S1 = t(as.matrix(S1))
       }
       tmp0 = tmp0 + mean(S0[i,ind0]==S1[i,ind0])
@@ -41,7 +41,57 @@ relia_rows = function(Slist, conn_only=TRUE){
       for(k in 1:nrow(S0)){
         if(k!=i) {
           S1 = Slist[[j]]
-          if(class(S1)=="numeric"){
+          if(class(S1)[1]=="numeric"){
+            S1 = t(as.matrix(S1))
+          }
+          tmp1 = tmp1 + mean(S0[i,ind0]==S1[k,ind0])
+        }
+      }
+    }
+    tmp0 = tmp0 / (length(Slist)-1)
+    tmp1 = tmp1/  (length(Slist)-1) / nrow(S0)
+
+    r_out[i] = (tmp0 - tmp1) / (1 - tmp1)
+  }
+
+  return(r = r_out )
+}
+
+
+relia_idx = function(Slist, group, g0,g1){
+
+  S0 = Slist[[1]]
+  if(class(S0)[1]!="matrix"){
+    S0 = t(as.matrix(S0))
+  }
+
+  S2 = matrix(0,236,236)
+  S2[group==g0,group==g1] = 1
+  S2[group==g1,group==g0] = 1
+  S3 = vec_mat(S2)
+
+
+  r_out = rep(0,nrow(S0))
+
+  for(i in 1:nrow(S0)){
+    tmp0 = 0
+    ind0 = (S3 ==1)
+
+    for(j in 2:length(Slist) ){
+      S1 = Slist[[j]]
+      if(class(S1)[1]!="matrix"){
+        S1 = t(as.matrix(S1))
+      }
+      tmp0 = tmp0 + mean(S0[i,ind0]==S1[i,ind0])
+    }
+
+    tmp1 = tmp0
+
+    for(j in 2:length(Slist) ){
+      for(k in 1:nrow(S0)){
+        if(k!=i) {
+          S1 = Slist[[j]]
+          if(class(S1)[1]=="numeric"){
             S1 = t(as.matrix(S1))
           }
           tmp1 = tmp1 + mean(S0[i,ind0]==S1[k,ind0])
@@ -61,7 +111,7 @@ relia_rows = function(Slist, conn_only=TRUE){
 relia_rows_bygroup = function(Slist,group,conn_only=TRUE){
 
   S0 = Slist[[1]]
-  if(class(S0)!="matrix"){
+  if(class(S0)[1]!="matrix"){
     S0 = t(as.matrix(S0))
   }
 
@@ -104,7 +154,7 @@ relia_rows_bygroup = function(Slist,group,conn_only=TRUE){
 
       for(j in 2:length(Slist) ){
         S1 = Slist[[j]]
-        if(class(S1)!="matrix"){
+        if(class(S1)[1]!="matrix"){
           S1 = t(as.matrix(S1))
         }
         S1_g = S1[,group_vec==g]
@@ -117,7 +167,7 @@ relia_rows_bygroup = function(Slist,group,conn_only=TRUE){
         for(k in 1:nrow(S0)){
           if(k!=i) {
             S1 = Slist[[j]]
-            if(class(S1)=="numeric"){
+            if(class(S1)[1]=="numeric"){
               S1 = t(as.matrix(S1))
             }
             S1_g = S1[,group_vec==g]

@@ -11,9 +11,6 @@ connICA(data, q)
 
 \item{q}{a}
 }
-\value{
-
-}
 \description{
 connICA
 }

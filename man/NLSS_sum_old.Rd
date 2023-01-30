@@ -9,9 +9,6 @@ NLSS_sum_old(res, nstart = 1, nend = 1)
 \arguments{
 \item{nend}{}
 }
-\value{
-
-}
 \description{
 Title
 }
