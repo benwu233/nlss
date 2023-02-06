@@ -2,9 +2,9 @@
 % Please edit documentation in R/sim_NLSS.R
 \name{sim_NLSS}
 \alias{sim_NLSS}
-\title{Simulation of NLSS}
+\title{simulate data from a NLSS model}
 \usage{
-sim_NLSS(n_node = 50, n = 40, alpha = 0.5, beta = 0.1)
+sim_NLSS(n_node = 50, n = 40, alpha_0 = c(0.5, 0.5, 0.5), alpha_1 = 0.1)
 }
 \arguments{
 \item{n_node}{number of nodes.}

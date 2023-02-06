@@ -15,9 +15,10 @@ Depends: R (>= 3.4.0), MCMCpack
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 LinkingTo: 
     Rcpp, RcppParallel
 Imports: 
-    Rcpp, RcppParallel, ica, gplots, stats, grDevices, plotrix, gtools
+    Rcpp, RcppParallel, ica, gplots, stats, grDevices, plotrix, gtools,
+    gridGraphics, gridExtra, grid
 SystemRequirements: GNU make

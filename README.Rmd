@@ -32,25 +32,41 @@ devtools::install_github("benwu233/nlss")
 
 This is a basic example which shows you how to use nlss:
 
-First we load the package and simulate networks with a nlss model with three  latent sources.
+We load the package and simulate networks with a NLSS model with three latent source networks.
 
 ```{r, message=FALSE}
 library(nlss)  
 set.seed(612)
 
 #simulate data with NLSS
-sim = sim_NLSS2(n_node = 50, n = 50, alpha_0 = c(3,2,1.5), alpha_1 = 2)
+sim = sim_NLSS(n_node = 50, n = 50, alpha_0 = c(3,2,1.5), alpha_1 = 2)
+```
+
+The true sources are:
+```{r, message=FALSE, fig.keep='last', fig.height = 2.2}
+heatmap.net(sim$S,lim = c(0,1), color = c("white","black"),
+            community = sim$community, ncol=3)
 ```
 
 Then, we solve the nlss model with the MCMC algorithm:
 ```{r}
-res = NLSS(data=sim$X, q=3, k0=0, total_iter = 5000, burn_in = 1000, thin = 10, show_step=1000, joint=TRUE, sprs = 1)
+res = NLSS(data=sim$X, states = c(0,1), state0 = 0,
+           q=3, q0=1,  total_iter = 5000, burn_in = 1000,
+           thin = 10, show_step=1000, joint=TRUE)
 ```
 
 We summarize the results:
 ```{r}
-sum_res = NLSS_sum(res,th=0.95, k0 = 1, nstart = 1, nend = 400)
+sum_res = NLSS_sum(res,th=0.5, nstart = 1, nend = 400)
 ```
+
+and print the estimated source networks:
+```{r, message=FALSE, fig.keep='last', fig.height = 2.2}
+heatmap.net(sum_res$S,lim = c(0,1), color = c("white","black"),
+            community = sim$community,ncol=3)
+```
+
+
 
 
 

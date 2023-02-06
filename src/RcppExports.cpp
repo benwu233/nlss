@@ -58,8 +58,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // update_S_joint
-void update_S_joint(NumericVector S, NumericVector X, NumericMatrix A, int q, int p, int K, int n, NumericMatrix Sspace, NumericMatrix stat_link, int ns, int sprs);
-RcppExport SEXP _nlss_update_S_joint(SEXP SSEXP, SEXP XSEXP, SEXP ASEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP nSEXP, SEXP SspaceSEXP, SEXP stat_linkSEXP, SEXP nsSEXP, SEXP sprsSEXP) {
+void update_S_joint(NumericVector S, NumericVector X, NumericMatrix A, int q, int p, int K, int n, NumericMatrix Sspace, NumericVector states, NumericMatrix stat_link, int ns, int q0);
+RcppExport SEXP _nlss_update_S_joint(SEXP SSEXP, SEXP XSEXP, SEXP ASEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP nSEXP, SEXP SspaceSEXP, SEXP statesSEXP, SEXP stat_linkSEXP, SEXP nsSEXP, SEXP q0SEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
@@ -70,10 +70,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type K(KSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type Sspace(SspaceSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type states(statesSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type stat_link(stat_linkSEXP);
     Rcpp::traits::input_parameter< int >::type ns(nsSEXP);
-    Rcpp::traits::input_parameter< int >::type sprs(sprsSEXP);
-    update_S_joint(S, X, A, q, p, K, n, Sspace, stat_link, ns, sprs);
+    Rcpp::traits::input_parameter< int >::type q0(q0SEXP);
+    update_S_joint(S, X, A, q, p, K, n, Sspace, states, stat_link, ns, q0);
     return R_NilValue;
 END_RCPP
 }
@@ -133,26 +134,9 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// update_beta
-void update_beta(NumericVector beta, NumericVector S, IntegerVector group, double gamma_0, int q, int p, int K, int G);
-RcppExport SEXP _nlss_update_beta(SEXP betaSEXP, SEXP SSEXP, SEXP groupSEXP, SEXP gamma_0SEXP, SEXP qSEXP, SEXP pSEXP, SEXP KSEXP, SEXP GSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< double >::type gamma_0(gamma_0SEXP);
-    Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type G(GSEXP);
-    update_beta(beta, S, group, gamma_0, q, p, K, G);
-    return R_NilValue;
-END_RCPP
-}
 // NLSS_gibbs_sampler
-Rcpp::List NLSS_gibbs_sampler(NumericVector X, NumericVector A0, NumericVector S0, NumericVector Y0, NumericMatrix stat_link, int joint, NumericVector alpha, NumericMatrix Sspace, int sprs, int K, int total_iter, int burn_in, int thin, int show_step);
-RcppExport SEXP _nlss_NLSS_gibbs_sampler(SEXP XSEXP, SEXP A0SEXP, SEXP S0SEXP, SEXP Y0SEXP, SEXP stat_linkSEXP, SEXP jointSEXP, SEXP alphaSEXP, SEXP SspaceSEXP, SEXP sprsSEXP, SEXP KSEXP, SEXP total_iterSEXP, SEXP burn_inSEXP, SEXP thinSEXP, SEXP show_stepSEXP) {
+Rcpp::List NLSS_gibbs_sampler(NumericVector X, NumericVector A0, NumericVector S0, NumericVector Y0, NumericMatrix stat_link, int joint, NumericVector alpha, NumericMatrix Sspace, NumericVector states, int q0, int K, int total_iter, int burn_in, int thin, int show_step);
+RcppExport SEXP _nlss_NLSS_gibbs_sampler(SEXP XSEXP, SEXP A0SEXP, SEXP S0SEXP, SEXP Y0SEXP, SEXP stat_linkSEXP, SEXP jointSEXP, SEXP alphaSEXP, SEXP SspaceSEXP, SEXP statesSEXP, SEXP q0SEXP, SEXP KSEXP, SEXP total_iterSEXP, SEXP burn_inSEXP, SEXP thinSEXP, SEXP show_stepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -164,46 +148,33 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type joint(jointSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type Sspace(SspaceSEXP);
-    Rcpp::traits::input_parameter< int >::type sprs(sprsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type states(statesSEXP);
+    Rcpp::traits::input_parameter< int >::type q0(q0SEXP);
     Rcpp::traits::input_parameter< int >::type K(KSEXP);
     Rcpp::traits::input_parameter< int >::type total_iter(total_iterSEXP);
     Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
     Rcpp::traits::input_parameter< int >::type thin(thinSEXP);
     Rcpp::traits::input_parameter< int >::type show_step(show_stepSEXP);
-    rcpp_result_gen = Rcpp::wrap(NLSS_gibbs_sampler(X, A0, S0, Y0, stat_link, joint, alpha, Sspace, sprs, K, total_iter, burn_in, thin, show_step));
+    rcpp_result_gen = Rcpp::wrap(NLSS_gibbs_sampler(X, A0, S0, Y0, stat_link, joint, alpha, Sspace, states, q0, K, total_iter, burn_in, thin, show_step));
     return rcpp_result_gen;
 END_RCPP
 }
-// Simu_DLSS
-NumericMatrix Simu_DLSS(NumericMatrix S, NumericMatrix A, int K);
-RcppExport SEXP _nlss_Simu_DLSS(SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
+// simNLSS
+NumericMatrix simNLSS(NumericMatrix S, NumericMatrix A, int K);
+RcppExport SEXP _nlss_simNLSS(SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
     Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(Simu_DLSS(S, A, K));
+    rcpp_result_gen = Rcpp::wrap(simNLSS(S, A, K));
     return rcpp_result_gen;
 END_RCPP
 }
-// Simu_data_bi
-NumericMatrix Simu_data_bi(NumericMatrix X, NumericMatrix mu0, NumericMatrix sd0, NumericVector th);
-RcppExport SEXP _nlss_Simu_data_bi(SEXP XSEXP, SEXP mu0SEXP, SEXP sd0SEXP, SEXP thSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type mu0(mu0SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type sd0(sd0SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type th(thSEXP);
-    rcpp_result_gen = Rcpp::wrap(Simu_data_bi(X, mu0, sd0, th));
-    return rcpp_result_gen;
-END_RCPP
-}
-// DLSS_Deviance_c
-double DLSS_Deviance_c(NumericMatrix X, NumericMatrix S, NumericMatrix A, int K);
-RcppExport SEXP _nlss_DLSS_Deviance_c(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
+// NLSS_logLik_noise0
+double NLSS_logLik_noise0(NumericMatrix X, NumericMatrix S, NumericMatrix A, int K);
+RcppExport SEXP _nlss_NLSS_logLik_noise0(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -211,102 +182,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
     Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(DLSS_Deviance_c(X, S, A, K));
-    return rcpp_result_gen;
-END_RCPP
-}
-// DLSS_logLik_noisefree
-double DLSS_logLik_noisefree(NumericMatrix X, NumericMatrix S, NumericMatrix A, int K);
-RcppExport SEXP _nlss_DLSS_logLik_noisefree(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(DLSS_logLik_noisefree(X, S, A, K));
-    return rcpp_result_gen;
-END_RCPP
-}
-// NLSS_logLik_noise
-double NLSS_logLik_noise(NumericMatrix X, NumericMatrix A, NumericMatrix beta, IntegerVector group, int K, int G);
-RcppExport SEXP _nlss_NLSS_logLik_noise(SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP KSEXP, SEXP GSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type G(GSEXP);
-    rcpp_result_gen = Rcpp::wrap(NLSS_logLik_noise(X, A, beta, group, K, G));
-    return rcpp_result_gen;
-END_RCPP
-}
-// NLSS_logLik_noise_group
-double NLSS_logLik_noise_group(NumericMatrix X, NumericMatrix A, NumericMatrix beta, IntegerVector group, int g0, int K, int G);
-RcppExport SEXP _nlss_NLSS_logLik_noise_group(SEXP XSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP g0SEXP, SEXP KSEXP, SEXP GSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< int >::type g0(g0SEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type G(GSEXP);
-    rcpp_result_gen = Rcpp::wrap(NLSS_logLik_noise_group(X, A, beta, group, g0, K, G));
-    return rcpp_result_gen;
-END_RCPP
-}
-// DLSS_logLik_noise_1
-double DLSS_logLik_noise_1(NumericMatrix X, NumericMatrix S, NumericMatrix A, NumericMatrix beta, IntegerVector group, int K, int G);
-RcppExport SEXP _nlss_DLSS_logLik_noise_1(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP betaSEXP, SEXP groupSEXP, SEXP KSEXP, SEXP GSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type G(GSEXP);
-    rcpp_result_gen = Rcpp::wrap(DLSS_logLik_noise_1(X, S, A, beta, group, K, G));
-    return rcpp_result_gen;
-END_RCPP
-}
-// DLSS_logLik_noise0_group
-double DLSS_logLik_noise0_group(NumericMatrix X, NumericMatrix S, NumericMatrix A, IntegerVector group, int g0, int K, int G);
-RcppExport SEXP _nlss_DLSS_logLik_noise0_group(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP groupSEXP, SEXP g0SEXP, SEXP KSEXP, SEXP GSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group(groupSEXP);
-    Rcpp::traits::input_parameter< int >::type g0(g0SEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    Rcpp::traits::input_parameter< int >::type G(GSEXP);
-    rcpp_result_gen = Rcpp::wrap(DLSS_logLik_noise0_group(X, S, A, group, g0, K, G));
-    return rcpp_result_gen;
-END_RCPP
-}
-// DLSS_logLik_noise0
-double DLSS_logLik_noise0(NumericMatrix X, NumericMatrix S, NumericMatrix A, int K);
-RcppExport SEXP _nlss_DLSS_logLik_noise0(SEXP XSEXP, SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(DLSS_logLik_noise0(X, S, A, K));
+    rcpp_result_gen = Rcpp::wrap(NLSS_logLik_noise0(X, S, A, K));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -315,21 +191,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"_nlss_update_S_seprt", (DL_FUNC) &_nlss_update_S_seprt, 10},
     {"_nlss_sum_subset2", (DL_FUNC) &_nlss_sum_subset2, 4},
     {"_nlss_sum_subset3", (DL_FUNC) &_nlss_sum_subset3, 4},
-    {"_nlss_update_S_joint", (DL_FUNC) &_nlss_update_S_joint, 11},
+    {"_nlss_update_S_joint", (DL_FUNC) &_nlss_update_S_joint, 12},
     {"_nlss_findmode_S", (DL_FUNC) &_nlss_findmode_S, 10},
     {"_nlss_update_A", (DL_FUNC) &_nlss_update_A, 10},
     {"_nlss_update_Y", (DL_FUNC) &_nlss_update_Y, 9},
-    {"_nlss_update_beta", (DL_FUNC) &_nlss_update_beta, 8},
-    {"_nlss_NLSS_gibbs_sampler", (DL_FUNC) &_nlss_NLSS_gibbs_sampler, 14},
-    {"_nlss_Simu_DLSS", (DL_FUNC) &_nlss_Simu_DLSS, 3},
-    {"_nlss_Simu_data_bi", (DL_FUNC) &_nlss_Simu_data_bi, 4},
-    {"_nlss_DLSS_Deviance_c", (DL_FUNC) &_nlss_DLSS_Deviance_c, 4},
-    {"_nlss_DLSS_logLik_noisefree", (DL_FUNC) &_nlss_DLSS_logLik_noisefree, 4},
-    {"_nlss_NLSS_logLik_noise", (DL_FUNC) &_nlss_NLSS_logLik_noise, 6},
-    {"_nlss_NLSS_logLik_noise_group", (DL_FUNC) &_nlss_NLSS_logLik_noise_group, 7},
-    {"_nlss_DLSS_logLik_noise_1", (DL_FUNC) &_nlss_DLSS_logLik_noise_1, 7},
-    {"_nlss_DLSS_logLik_noise0_group", (DL_FUNC) &_nlss_DLSS_logLik_noise0_group, 7},
-    {"_nlss_DLSS_logLik_noise0", (DL_FUNC) &_nlss_DLSS_logLik_noise0, 4},
+    {"_nlss_NLSS_gibbs_sampler", (DL_FUNC) &_nlss_NLSS_gibbs_sampler, 15},
+    {"_nlss_simNLSS", (DL_FUNC) &_nlss_simNLSS, 3},
+    {"_nlss_NLSS_logLik_noise0", (DL_FUNC) &_nlss_NLSS_logLik_noise0, 4},
     {NULL, NULL, 0}
 };
 

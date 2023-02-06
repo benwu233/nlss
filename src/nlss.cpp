@@ -253,45 +253,46 @@ struct UpdateS_t2 : public Worker {
 
   RVector<double> seed;
   RMatrix<double> Sspace;
+  RVector<double> states;
   RMatrix<double> stat_link;
   int ns;
 
   UpdateS_t2(NumericVector S,NumericVector X, NumericVector A, NumericMatrix sumA,
              int q, int p, int K, int n,
              NumericVector seed, NumericMatrix Sspace,
+             NumericVector states,
              NumericMatrix stat_link, int ns)
     : S(S), X(X), A(A), sumA(sumA), q(q), p(p), K(K), n(n),
-      seed(seed), Sspace(Sspace), stat_link(stat_link), ns(ns){}
+      seed(seed), Sspace(Sspace), states(states),
+      stat_link(stat_link), ns(ns){}
 
   void operator() (std::size_t begin, std::size_t end) {
 
     for(std::size_t j0 = begin; j0 < end; j0++){
 
-      double Xind = 0;
       double logprob[ns];
       double maxprob;
       double sum_prob[ns];
-      double acm;
-      double tmp;
+      int Xind[n];
       double tmp2;
       int ind;
 
-      int tag = 0;
-
       for(int s = 0; s < ns; s++){
         logprob[s] = 0;
-        /*
-         for(int l = 0; l < (q-1); l++){
-         logprob[s] += log(beta[l+g0*(q-1)+(Sspace(s,l)-1)*(q-1)*G] + 1e-20);
-         }
-         */
       }
 
       for(int i = 0; i < n; i++){
-        Xind = X[i+n*j0] - 1;
+        for(int j = 0; j < K; j++){
+          if(states[j]==X[i+n*j0]){
+            Xind[i] = j;
+            break;
+          }
+        }
+      }
 
+      for(int i = 0; i < n; i++){
         for(int s = 0; s < ns; s++){
-          ind = stat_link(s,Xind);
+          ind = stat_link(s,Xind[i]);
           logprob[s] += sumA(i,ind-1);
         }
       }
@@ -427,16 +428,8 @@ struct UpdateA : public Worker {
         b_i[(int)(Y[ind]+1e-20)-1] += seed[i+n*j];
 
       }
-      /*
-       for(int l=0; l<q; l++){
-       if(b_i[l] > maxb){
-       maxb = b_i[l];
-       }
-       }
-       */
-      for(int l=0; l<q; l++){
 
-        //  b_i[l] = exp( log(b_i[l]) - log(maxb) );
+      for(int l=0; l<q; l++){
 
         sum_b_i += b_i[l];
       }
@@ -634,8 +627,10 @@ Rcpp::NumericMatrix sum_subset3(NumericMatrix a, int q, int n, int nonzero) {
 
 
 // [[Rcpp::export]]
-void update_S_joint(NumericVector S,NumericVector X, NumericMatrix A, int q, int p, int K, int n,
-                    NumericMatrix Sspace, NumericMatrix stat_link, int ns, int sprs){
+void update_S_joint(NumericVector S,NumericVector X, NumericMatrix A, int q, int p,
+                    int K, int n,
+                    NumericMatrix Sspace, NumericVector states,
+                    NumericMatrix stat_link, int ns, int q0){
 
   NumericVector seed = Rcpp::runif(p,0,1);
 
@@ -643,7 +638,7 @@ void update_S_joint(NumericVector S,NumericVector X, NumericMatrix A, int q, int
   int num1 = 1;
   int num_a = 0;
 
-  for(int i = 1; i <= sprs; i++){
+  for(int i = 1; i <= q0; i++){
     num0 = 1;
     num1 = 1;
 
@@ -666,20 +661,9 @@ void update_S_joint(NumericVector S,NumericVector X, NumericMatrix A, int q, int
 
   NumericVector newS((q-1)*p);
 
-
-
-  /*
-   for(int l=0; l < (q-1); l++){
-   for(int j=0; j<p; j++){
-   newS[l+(q-1)*j] = S[l+(q-1)*j];
-   }
-   }
-   */
-
-  sumA1 = sum_subset3(A,q-1,n,sprs);
+  sumA1 = sum_subset3(A,q-1,n,q0);
 
   Rcpp::Dimension sumA1_dim = sumA1.attr("dim");
-
 
   for(int i = 0; i < n; i++){
     for(int j = 0; j < (q-1); j++){
@@ -693,7 +677,7 @@ void update_S_joint(NumericVector S,NumericVector X, NumericMatrix A, int q, int
     }
   }
 
-  UpdateS_t2 updateS_t2(newS, X, A, sumA, q, p, K,  n, seed, Sspace,
+  UpdateS_t2 updateS_t2(newS, X, A, sumA, q, p, K, n, seed, Sspace, states,
                         stat_link, ns);
   parallelFor(0, p, updateS_t2);
 
@@ -702,6 +686,7 @@ void update_S_joint(NumericVector S,NumericVector X, NumericMatrix A, int q, int
       S[l+(q-1)*j] = newS[l+(q-1)*j];
     }
   }
+
 }
 
 
@@ -765,8 +750,10 @@ using namespace Rcpp;
 Rcpp::List NLSS_gibbs_sampler(NumericVector X,NumericVector A0, NumericVector S0,NumericVector Y0,
                               NumericMatrix stat_link, int joint,
                               NumericVector alpha, NumericMatrix Sspace,
-                              int sprs, int K,
-                              int total_iter = 1000, int burn_in = 100, int thin = 10, int show_step = 50) {
+                              NumericVector states,
+                              int q0, int K,
+                              int total_iter = 1000, int burn_in = 100,
+                              int thin = 10, int show_step = 50) {
 
   Rcpp::Dimension X_dim = X.attr("dim");
   Rcpp::Dimension A_dim = A0.attr("dim");
@@ -775,7 +762,6 @@ Rcpp::List NLSS_gibbs_sampler(NumericVector X,NumericVector A0, NumericVector S0
   int n = X_dim[0];
   int p = X_dim[1];
   int q = A_dim[1];
-
   int ns = Sspace_dim[0];
 
   int ind = 0;
@@ -839,14 +825,12 @@ Rcpp::List NLSS_gibbs_sampler(NumericVector X,NumericVector A0, NumericVector S0
     for(int iter=1; iter<=total_iter; iter++){
 
       //std::cout << "update S" << std::endl;
-      update_S_joint(S, X, A, q, p, K, n, Sspace, stat_link, ns, sprs);
+      update_S_joint(S, X, A, q, p, K,  n, Sspace, states, stat_link, ns, q0);
 
       update_Y(Y, X, A, S, seed, q, p, n,K);
 
       update_A(A, X, Y, alpha[0],alpha[1], q, p, n, seed, seed2);
 
-      //std::cout << "update beta" << std::endl;
-      //update_beta(beta,S, group, gamma, q, p, K,G);
 
       if( (iter > burn_in)&&( (iter-burn_in)%thin==0 ) ){
         //copy A_trace
@@ -860,6 +844,7 @@ Rcpp::List NLSS_gibbs_sampler(NumericVector X,NumericVector A0, NumericVector S0
           for(int j=0; j<p; j++){
             Sint = (int)(S[l+S_dim[0]*j]+1e-20);
             S_trace[l+S_dim[0]*j+tag*S_dim[1]*S_dim[0]] = Sint;
+            S_trace[l+S_dim[0]*j+tag*S_dim[1]*S_dim[0]] = S[l+S_dim[0]*j];
           }
         }
 
@@ -940,8 +925,7 @@ Rcpp::List NLSS_gibbs_sampler(NumericVector X,NumericVector A0, NumericVector S0
   return Rcpp::List::create(Named("X") = X, Named("A") = A_trace,
                             Named("S") = S_trace,
                             Named("Y") = Y_trace,
-                            Named("K")= K
-  );
+                            Named("K")= K);
 }
 
 

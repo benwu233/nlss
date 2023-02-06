@@ -7,20 +7,27 @@
 NLSS(
   data,
   q = 2,
-  k0 = 2,
-  init = list(S = NULL, A = NULL, beta = NULL),
+  q0 = 2,
+  init = list(S = NULL, A = NULL, Y = NULL),
+  states = (min(data):max(data)),
+  state0 = min(data),
   total_iter = 1000,
   burn_in = 500,
   thin = 10,
   show_step = 100,
-  sprs = 2,
   joint = TRUE
 )
 }
 \arguments{
-\item{data}{a n*p matrix with discrete values, n is the sample size, p is the num of node pairs.}
+\item{data}{a n*p matrix with discrete-valued connection states, n is the sample size, p is the num of node pairs.}
 
 \item{q}{the number of latent sources.}
+
+\item{init}{a list of initial values for S and A.}
+
+\item{states}{a vector of all possible states.}
+
+\item{state0}{the zero states.}
 
 \item{total_iter}{the number of total iterations.}
 
@@ -39,5 +46,5 @@ in the MCMC samples.}
 }
 }
 \description{
-The function conducts MCMC sampling for the NLSS model. The number of latent sources need to be specified.
+The function conducts MCMC sampling for the NLSS model.
 }

@@ -13,8 +13,8 @@ sum_subset3 <- function(a, q, n, nonzero) {
     .Call('_nlss_sum_subset3', PACKAGE = 'nlss', a, q, n, nonzero)
 }
 
-update_S_joint <- function(S, X, A, q, p, K, n, Sspace, stat_link, ns, sprs) {
-    invisible(.Call('_nlss_update_S_joint', PACKAGE = 'nlss', S, X, A, q, p, K, n, Sspace, stat_link, ns, sprs))
+update_S_joint <- function(S, X, A, q, p, K, n, Sspace, states, stat_link, ns, q0) {
+    invisible(.Call('_nlss_update_S_joint', PACKAGE = 'nlss', S, X, A, q, p, K, n, Sspace, states, stat_link, ns, q0))
 }
 
 findmode_S <- function(S, X, A, beta, group, q, p, K, G, n) {
@@ -29,47 +29,15 @@ update_Y <- function(Y, X, A, S, seed, q, p, n, K) {
     invisible(.Call('_nlss_update_Y', PACKAGE = 'nlss', Y, X, A, S, seed, q, p, n, K))
 }
 
-update_beta <- function(beta, S, group, gamma_0, q, p, K, G) {
-    invisible(.Call('_nlss_update_beta', PACKAGE = 'nlss', beta, S, group, gamma_0, q, p, K, G))
+NLSS_gibbs_sampler <- function(X, A0, S0, Y0, stat_link, joint, alpha, Sspace, states, q0, K, total_iter = 1000L, burn_in = 100L, thin = 10L, show_step = 50L) {
+    .Call('_nlss_NLSS_gibbs_sampler', PACKAGE = 'nlss', X, A0, S0, Y0, stat_link, joint, alpha, Sspace, states, q0, K, total_iter, burn_in, thin, show_step)
 }
 
-NLSS_gibbs_sampler <- function(X, A0, S0, Y0, stat_link, joint, alpha, Sspace, sprs, K, total_iter = 1000L, burn_in = 100L, thin = 10L, show_step = 50L) {
-    .Call('_nlss_NLSS_gibbs_sampler', PACKAGE = 'nlss', X, A0, S0, Y0, stat_link, joint, alpha, Sspace, sprs, K, total_iter, burn_in, thin, show_step)
+simNLSS <- function(S, A, K) {
+    .Call('_nlss_simNLSS', PACKAGE = 'nlss', S, A, K)
 }
 
-Simu_DLSS <- function(S, A, K) {
-    .Call('_nlss_Simu_DLSS', PACKAGE = 'nlss', S, A, K)
-}
-
-Simu_data_bi <- function(X, mu0, sd0, th) {
-    .Call('_nlss_Simu_data_bi', PACKAGE = 'nlss', X, mu0, sd0, th)
-}
-
-DLSS_Deviance_c <- function(X, S, A, K) {
-    .Call('_nlss_DLSS_Deviance_c', PACKAGE = 'nlss', X, S, A, K)
-}
-
-DLSS_logLik_noisefree <- function(X, S, A, K) {
-    .Call('_nlss_DLSS_logLik_noisefree', PACKAGE = 'nlss', X, S, A, K)
-}
-
-NLSS_logLik_noise <- function(X, A, beta, group, K, G) {
-    .Call('_nlss_NLSS_logLik_noise', PACKAGE = 'nlss', X, A, beta, group, K, G)
-}
-
-NLSS_logLik_noise_group <- function(X, A, beta, group, g0, K, G) {
-    .Call('_nlss_NLSS_logLik_noise_group', PACKAGE = 'nlss', X, A, beta, group, g0, K, G)
-}
-
-DLSS_logLik_noise_1 <- function(X, S, A, beta, group, K, G) {
-    .Call('_nlss_DLSS_logLik_noise_1', PACKAGE = 'nlss', X, S, A, beta, group, K, G)
-}
-
-DLSS_logLik_noise0_group <- function(X, S, A, group, g0, K, G) {
-    .Call('_nlss_DLSS_logLik_noise0_group', PACKAGE = 'nlss', X, S, A, group, g0, K, G)
-}
-
-DLSS_logLik_noise0 <- function(X, S, A, K) {
-    .Call('_nlss_DLSS_logLik_noise0', PACKAGE = 'nlss', X, S, A, K)
+NLSS_logLik_noise0 <- function(X, S, A, K) {
+    .Call('_nlss_NLSS_logLik_noise0', PACKAGE = 'nlss', X, S, A, K)
 }
 
