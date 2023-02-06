@@ -7,7 +7,7 @@
 NLSS(
   data,
   q = 2,
-  q0 = 2,
+  q0 = q,
   init = list(S = NULL, A = NULL, Y = NULL),
   states = (min(data):max(data)),
   state0 = min(data),

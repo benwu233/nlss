@@ -51,7 +51,7 @@ heatmap.net(sim$S,lim = c(0,1), color = c("white","black"),
 Then, we solve the nlss model with the MCMC algorithm:
 ```{r}
 res = NLSS(data=sim$X, states = c(0,1), state0 = 0,
-           q=3, q0=1,  total_iter = 5000, burn_in = 1000,
+           q=3, total_iter = 5000, burn_in = 1000,
            thin = 10, show_step=1000, joint=TRUE)
 ```
 
@@ -63,7 +63,7 @@ sum_res = NLSS_sum(res,th=0.5, nstart = 1, nend = 400)
 and print the estimated source networks:
 ```{r, message=FALSE, fig.keep='last', fig.height = 2.2}
 heatmap.net(sum_res$S,lim = c(0,1), color = c("white","black"),
-            community = sim$community,ncol=3)
+            community = sim$community, ncol=3)
 ```
 
 

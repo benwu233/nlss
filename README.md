@@ -45,7 +45,7 @@ Then, we solve the nlss model with the MCMC algorithm:
 
 ``` r
 res = NLSS(data=sim$X, states = c(0,1), state0 = 0,
-           q=3, q0=1,  total_iter = 5000, burn_in = 1000,
+           q=3, total_iter = 5000, burn_in = 1000,
            thin = 10, show_step=1000, joint=TRUE)
 ```
 
@@ -59,7 +59,7 @@ and print the estimated source networks:
 
 ``` r
 heatmap.net(sum_res$S,lim = c(0,1), color = c("white","black"),
-            community = sim$community,ncol=3)
+            community = sim$community, ncol=3)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />

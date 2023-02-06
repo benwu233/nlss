@@ -27,7 +27,7 @@
 #' @export
 #'
 #' @examples
-NLSS = function(data,  q=2, q0 = 2,  init = list(S=NULL,A=NULL,Y=NULL),
+NLSS = function(data,  q=2, q0 = q, init = list(S=NULL,A=NULL,Y=NULL),
                 states = (min(data):max(data)), state0 = min(data),
                 total_iter = 1000, burn_in = 500, thin = 10, show_step = 100,
                 joint=TRUE){
