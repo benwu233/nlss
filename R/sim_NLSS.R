@@ -22,7 +22,7 @@
 #' @importFrom utils txtProgressBar
 #'
 #' @examples
-sim_NLSS = function(n_node = 50, n = 40, alpha_0 = c(0.5,0.5,0.5), alpha_1 = 0.1 ){
+sim_NLSS = function(n_node = 50, n = 50, alpha_0 = c(0.5,0.5,0.5), alpha_1 = 0.1 ){
 
   p = (n_node-1)*n_node/2
   q = 4

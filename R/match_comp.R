@@ -20,3 +20,10 @@ match_rows = function(Slist){
   return(Slist_out)
 }
 
+
+
+#' @export
+match_source = function(S_true, S_est){
+  return(S_est[compute.match.idx.s.tra2(S_est,S_true),])
+}
+

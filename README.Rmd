@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-Network Latent Source Separation (nlss), a blind source separation algorithm designed for network data.
+Network Latent Source Separation (NLSS), a blind source separation algorithm designed for network data.
 
 ## Installation
 
@@ -36,7 +36,7 @@ We load the package and simulate networks with a NLSS model with three latent so
 
 ```{r, message=FALSE}
 library(nlss)  
-set.seed(612)
+set.seed(611)
 
 #simulate data with NLSS
 sim = sim_NLSS(n_node = 50, n = 50, alpha_0 = c(3,2,1.5), alpha_1 = 2)
@@ -48,16 +48,16 @@ heatmap.net(sim$S,lim = c(0,1), color = c("white","black"),
             community = sim$community, ncol=3)
 ```
 
-Then, we solve the nlss model with the MCMC algorithm:
+Then, we solve the NLSS model with the MCMC algorithm:
 ```{r}
 res = NLSS(data=sim$X, states = c(0,1), state0 = 0,
-           q=3, total_iter = 5000, burn_in = 1000,
+           q=3, total_iter = 2000, burn_in = 1000,
            thin = 10, show_step=1000, joint=TRUE)
 ```
 
 We summarize the results:
 ```{r}
-sum_res = NLSS_sum(res,th=0.5, nstart = 1, nend = 400)
+sum_res = NLSS_sum(res,th=0.95, nstart = 1, nend = 100)
 ```
 
 and print the estimated source networks:
@@ -66,10 +66,19 @@ heatmap.net(sum_res$S,lim = c(0,1), color = c("white","black"),
             community = sim$community, ncol=3)
 ```
 
+Match and compare with the true sources:
+```{r}
+S_match = match_source(sim$S, sum_res$S)
+lapply(1:3, function(i){caret::confusionMatrix(as.factor(S_match[i,]), as.factor(sim$S[i,]), positive = "1" )} )
+```
 
 
 
+heatmap.net(res_sum[[3]][[1]]$S,lim = c(0,1), color = c("white","black"),
+            community = sim$community, ncol=3)
 
 
-
+tmp0 = res_sum[[3]][[50]]$S-1
+table(tmp0)
+table(sum_res$S)
 
