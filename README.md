@@ -157,8 +157,3 @@ lapply(1:3, function(i){caret::confusionMatrix(as.factor(S_match[i,]), as.factor
 #>        'Positive' Class : 1               
 #> 
 ```
-
-heatmap.net(res_sum\[\[3\]\]\[\[1\]\]$S,lim = c(0,1), color = c("white","black"),  community = sim$community,
-ncol=3)
-
-tmp0 = res_sum\[\[3\]\]\[\[50\]\]$S-1 table(tmp0) table(sum_res$S)
