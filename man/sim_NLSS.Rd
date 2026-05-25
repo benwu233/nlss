@@ -4,7 +4,13 @@
 \alias{sim_NLSS}
 \title{simulate data from a NLSS model}
 \usage{
-sim_NLSS(n_node = 50, n = 40, alpha_0 = c(0.5, 0.5, 0.5), alpha_1 = 0.1)
+sim_NLSS(
+  n_node = 50,
+  n = 50,
+  alpha_0 = c(0.5, 0.5, 0.5),
+  sd0 = 0.3,
+  alpha_1 = 0.1
+)
 }
 \arguments{
 \item{n_node}{number of nodes.}

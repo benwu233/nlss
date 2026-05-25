@@ -160,15 +160,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // simNLSS
-NumericMatrix simNLSS(NumericMatrix S, NumericMatrix A, int K);
-RcppExport SEXP _nlss_simNLSS(SEXP SSEXP, SEXP ASEXP, SEXP KSEXP) {
+NumericMatrix simNLSS(NumericMatrix S, NumericMatrix A, NumericVector val);
+RcppExport SEXP _nlss_simNLSS(SEXP SSEXP, SEXP ASEXP, SEXP valSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type S(SSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type A(ASEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(simNLSS(S, A, K));
+    Rcpp::traits::input_parameter< NumericVector >::type val(valSEXP);
+    rcpp_result_gen = Rcpp::wrap(simNLSS(S, A, val));
     return rcpp_result_gen;
 END_RCPP
 }

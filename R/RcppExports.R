@@ -33,8 +33,8 @@ NLSS_gibbs_sampler <- function(X, A0, S0, Y0, stat_link, joint, alpha, Sspace, s
     .Call('_nlss_NLSS_gibbs_sampler', PACKAGE = 'nlss', X, A0, S0, Y0, stat_link, joint, alpha, Sspace, states, q0, K, total_iter, burn_in, thin, show_step)
 }
 
-simNLSS <- function(S, A, K) {
-    .Call('_nlss_simNLSS', PACKAGE = 'nlss', S, A, K)
+simNLSS <- function(S, A, val) {
+    .Call('_nlss_simNLSS', PACKAGE = 'nlss', S, A, val)
 }
 
 NLSS_logLik_noise0 <- function(X, S, A, K) {

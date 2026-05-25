@@ -181,8 +181,6 @@ relia_rows_bygroup = function(Slist,group,conn_only=TRUE){
       r_out[g,i] = (tmp0 - tmp1) / (1 - tmp1)
       r_out2[g,i] = tmp0
     }
-
-
   }
 
 

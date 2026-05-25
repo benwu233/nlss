@@ -13,13 +13,15 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-NumericMatrix simNLSS(NumericMatrix S,NumericMatrix A, int K){
+NumericMatrix simNLSS(NumericMatrix S, NumericMatrix A,
+                      NumericVector val){
   Rcpp::Dimension S_dim = S.attr("dim");
   Rcpp::Dimension A_dim = A.attr("dim");
 
   int n = A_dim[0];
   int p = S_dim[1];
   int q = A_dim[1];
+  int K = val.size();
   NumericVector prob(K,0.0);
 
   NumericMatrix out(n,p);
@@ -29,12 +31,12 @@ NumericMatrix simNLSS(NumericMatrix S,NumericMatrix A, int K){
       for(int k=0; k<K; k++){
         prob[k] = A(i,q-1)/K;
         for(int h=0 ; h<(q-1); h++){
-          if( S(h,j)==(k) ){
+          if( S(h,j)==val[k] ){
             prob[k] += A(i,h);
           }
         }
       }
-      out(i,j) = as<double>(Rcpp::sample(K,1,false,as<sugar::probs_t>(prob))) - 1;
+      out(i,j) = val[as<double>(Rcpp::sample(K,1,false,as<sugar::probs_t>(prob))) - 1];
     }
   }
 

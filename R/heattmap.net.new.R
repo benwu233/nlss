@@ -52,11 +52,10 @@ heatmap.net = function(S,lim = c(min(S),max(S)),
   ad_S = list()
   for(i in 1:nrow(S)){
     ad_S[[i]] = vec_mat(as.numeric(S[i,]) )
-    L = nrow(ad_S)
   }
 
 
-  gl = lapply(1:3, function(i){
+  gl = lapply(1:nrow(S), function(i){
     heatmap.2(ad_S[[i]],Rowv = FALSE,Colv = FALSE,trace="none", symbreaks = TRUE,
               labRow=NA,labCol=NA,dendrogram="none",RowSideColors = sidecolor,
               ColSideColors = sidecolor,
@@ -69,5 +68,54 @@ heatmap.net = function(S,lim = c(min(S),max(S)),
   })
   grid.newpage()
   grid.arrange(grobs=gl, ncol=ncol, clip=TRUE)
+}
+
+
+#' @export
+heatmap.net2 = function(S,lim = c(min(S),max(S)),
+                       community = rep(1,(1 + sqrt(1+8*ncol(S))) / 2),
+                       color = bluered(100),
+                       ncol = nrow(S),
+                       filename, width, height){
+
+  sidecolor = rep("#b7b7b7",length(community))
+  colsep0 = NULL
+  target = "#8c8c8c"
+  tmp = "#b7b7b7"
+  for(i in 2:length(community)){
+    if(community[i]!=community[i-1]){
+      sidecolor[i] = target
+      target = tmp
+      tmp = sidecolor[i]
+      colsep0 = c(colsep0,i-1)
+    }
+    else{
+      sidecolor[i] = sidecolor[i-1]
+    }
+  }
+  if(class(S)[1]!="matrix"){
+    S = t( as.matrix(S) )
+  }
+
+  minS = lim[1]
+  maxS = lim[2]
+
+  h = (maxS - minS)/length(color)
+
+  ad_S = list()
+  for(i in 1:nrow(S)){
+    ad_S[[i]] = vec_mat(as.numeric(S[i,]) )
+    L = nrow(ad_S)
+    png(filename = paste(filename,"_",i,".png"), width = width, height = height)
+    heatmap.2(ad_S[[i]],Rowv = FALSE,Colv = FALSE,trace="none", symbreaks = TRUE,
+              labRow=NA,labCol=NA,dendrogram="none",RowSideColors = sidecolor,
+              ColSideColors = sidecolor,
+              cexRow=1,cexCol=1,colRow="white",colCol="white",
+              margins=c(0.2,0.2),col=color, breaks=seq(minS,maxS,h),
+              colsep = colsep0, rowsep = colsep0, sepcolor="black",
+              key = FALSE, lhei = c(0.05,3.5), lwid = c(0.05,3.5))
+    dev.off()
+  }
+
 }
 

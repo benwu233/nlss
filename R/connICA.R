@@ -1,7 +1,6 @@
-#' connICA
-#'
+#' @title connICA
 #' @param data Data matrix
-#' @param q a
+#' @param q number of sources
 #'
 #' @return
 #'
@@ -9,13 +8,11 @@
 #' @importFrom stats quantile
 #' @importFrom stats cor
 #' @importFrom stats lm
-#'
-#' @examples
 #' @export
 connICA = function(data,q){
   Ss = matrix(0,nrow = ncol(data), ncol = q*100)
   for(i in 1:100){
-    print(paste0("fastICA:",i,"/100." ))
+    #print(paste0("fastICA:",i,"/100." ))
     tmp = icafast(t(data),q,center =FALSE)
     Ss[,(q*(i-1)+1):(q*i)] = tmp$S
   }
