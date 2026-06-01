@@ -30,45 +30,64 @@ devtools::install_github("benwu233/nlss")
 
 ## Example
 
-This is a basic example which shows you how to use nlss:
+This is a basic example shows the implement of nlss package:
 
-We load the package and simulate networks with a NLSS model with three latent source networks.
 
-```{r, message=FALSE}
+Load the package and generate three true latent source networks. 
+```{r, message=FALSE, warning=FALSE}
 library(nlss)  
-set.seed(611)
-
-#simulate data with NLSS
-sim = sim_NLSS(n_node = 50, n = 50, alpha_0 = c(3,2,1.5), alpha_1 = 2)
+set.seed(716)
+signal = gen_sources(100)
 ```
 
-The true sources are:
+Draw the true sources.
 ```{r, message=FALSE, fig.keep='last', fig.height = 2.2}
-heatmap.net(sim$S,lim = c(0,1), color = c("white","black"),
-            community = sim$community, ncol=3)
+library(gplots)
+heatmap.net(signal$S,lim=c(0,1),
+             community = signal$community,
+             color = colorpanel(n = 100, low = "white", high = "black"))
 ```
 
-Then, we solve the NLSS model with the MCMC algorithm:
+
+Generate network data with NLSS.
+```{r, message=FALSE}
+sim0 = sim_NLSS(n = 150, alpha_0 = c(0.8,0.8,0.8),
+                         alpha_1 = 0.8, sd0 = 0.25, signal$S)
+```
+
+
+Draw samples of the network data.
+```{r, message=FALSE, fig.keep='last', fig.height = 2.2}
+heatmap.net(sim0$Xc[1:3,],lim=c(0,1),
+             community = signal$community,
+             color = colorpanel(n = 100, low = "white", high = "black"))
+```
+
+
+Solve with the MCMC algorithm:
 ```{r}
-res = NLSS(data=sim$X, states = c(0,1), state0 = 0,
-           q=3, total_iter = 2000, burn_in = 1000,
-           thin = 10, show_step=1000, joint=TRUE)
+data0 = thr_byrow(sim0$Xc,0.1)
+res = NLSS(data=data0, q=3, states = c(0,1), state0 = 0,
+                      total_iter = 2000, burn_in = 0, thin = 10,
+                      show_step=1000, joint=TRUE,
+                      q0 = 3)
 ```
 
-We summarize the results:
+Summarize the results:
 ```{r}
 sum_res = NLSS_sum(res,th=0.95, nstart = 1, nend = 100)
 ```
 
-and print the estimated source networks:
+Print the estimated source networks:
 ```{r, message=FALSE, fig.keep='last', fig.height = 2.2}
-heatmap.net(sum_res$S,lim = c(0,1), color = c("white","black"),
-            community = sim$community, ncol=3)
+heatmap.net(sum_res$S,lim=c(0,1),
+             community = signal$community,
+             color = colorpanel(n = 100, low = "white", high = "black"))
 ```
 
 Match and compare with the true sources:
 ```{r}
-S_match = match_source(sim$S, sum_res$S)
-lapply(1:3, function(i){caret::confusionMatrix(as.factor(S_match[i,]), as.factor(sim$S[i,]), positive = "1" )} )
+S_match = match_source(signal$S, sum_res$S)
+lapply(1:3, function(i){caret::confusionMatrix(as.factor(S_match[i,]), as.factor(signal$S[i,]), positive = "1" )} )
 ```
 

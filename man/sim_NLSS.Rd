@@ -2,36 +2,29 @@
 % Please edit documentation in R/sim_NLSS.R
 \name{sim_NLSS}
 \alias{sim_NLSS}
-\title{simulate data from a NLSS model}
+\title{Simulate data from a NLSS model adding Gaussian noise}
 \usage{
-sim_NLSS(
-  n_node = 50,
-  n = 50,
-  alpha_0 = c(0.5, 0.5, 0.5),
-  sd0 = 0.3,
-  alpha_1 = 0.1
-)
+sim_NLSS(n = 50, alpha_0 = c(0.5, 0.5, 0.5), alpha_1 = 0.1, sd0 = 0.3, S)
 }
 \arguments{
-\item{n_node}{number of nodes.}
+\item{n}{sample size}
 
-\item{n}{sample size.}
+\item{alpha_0}{concentration parameter (a three dimensional vector) for latent sources.}
 
-\item{alpha}{relative signal strengh.}
+\item{alpha_1}{concentration parameter (a scale variable) for noise.}
 
-\item{beta}{relative noise strengh.}
+\item{sd0}{standard deviation for the Gaussian noise}
+
+\item{S}{the latent source matrix}
 }
 \value{
 a R list containing the following terms:
 \describe{
-  \item{X}{the observed matrix.}
-  \item{S}{the latent source matrix.}
-  \item{A}{the mixing coefficent matrix.}
-  \item{community}{the community index.}
+  \item{Xc}{the data matrix (with Gaussian noise)}
+  \item{X}{the data matrix (without Gaussian noise)}
+  \item{A}{the mixing coefficient matrix}
 }
 }
 \description{
-This function simulates observations using NLSS with pre-specified latent sources.
-The number of latent sources is three, with one representing within-community connections and two
-representing cross-comminity connections.
+This function simulates observations using NLSS with given latent sources.
 }

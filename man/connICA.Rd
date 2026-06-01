@@ -9,7 +9,7 @@ connICA(data, q)
 \arguments{
 \item{data}{Data matrix}
 
-\item{q}{a}
+\item{q}{number of sources}
 }
 \description{
 connICA
