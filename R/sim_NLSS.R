@@ -1,10 +1,16 @@
-#' @title Generate latent sources
-#' @description This function simulates generate three latent source networks with eight communities.
-#' @param n_node number of nodes.
-#' @return a R list containing the following terms:
+#' @title Generate Latent Source Networks
+#' @description
+#' This function generates three latent source networks with a predefined
+#' eight-community structure. The generated source networks include a
+#' within-community source and two hub-like sources associated with selected
+#' communities.
+#' @param n_node An integer specifying the number of nodes in the network.
+#'   The default is \code{50}.
+#' @return A list containing the following components:
 #' \describe{
-#'   \item{S}{the latent source matrix with each row representing a source network (vectorized adjacency matrix).}
-#'   \item{community}{the community index for each node.}
+#'   \item{\code{S}}{A latent source matrix, where each row represents one
+#'   source network in vectorized adjacency matrix form.}
+#'   \item{\code{community}}{A vector of community labels for the network nodes.}
 #' }
 #' @export
 #' @importFrom stats runif
@@ -78,18 +84,29 @@ gen_sources = function(n_node = 50){
   return(list(S=S, community = modu) )
 }
 
-#' @title Simulate data from a NLSS model adding Gaussian noise
-#' @description This function simulates observations using NLSS with given latent sources.
-#' @param n sample size
-#' @param alpha_0 concentration parameter (a three dimensional vector) for latent sources.
-#' @param alpha_1 concentration parameter (a scale variable) for noise.
-#' @param sd0 standard deviation for the Gaussian noise
-#' @param S the latent source matrix
-#' @return a R list containing the following terms:
+#' @title Simulate Data from an NLSS Model with Gaussian Noise
+#' @description
+#' This function simulates observations from the Network Latent Source
+#' Separation (NLSS) model with given latent source networks. Mixing coefficients
+#' are generated from a Dirichlet distribution, and optional Gaussian noise is
+#' added to the noiseless NLSS observations.
+#' @param n An integer specifying the sample size. The default is \code{50}.
+#' @param alpha_0 A numeric vector of Dirichlet concentration parameters for the
+#'   latent source components. Its length should be equal to the number of
+#'   latent sources, namely \code{nrow(S)}. The default is
+#'   \code{c(0.5, 0.5, 0.5)}.
+#' @param alpha_1 A numeric value specifying the Dirichlet concentration
+#'   parameter for the background or noise component. The default is \code{0.1}.
+#' @param sd0 A numeric value specifying the standard deviation of the additive
+#'   Gaussian noise. The default is \code{0.3}.
+#' @param S A latent source matrix, where each row represents one source network
+#'   in vectorized adjacency matrix form.
+#' @return A list containing the following components:
 #' \describe{
-#'   \item{Xc}{the data matrix (with Gaussian noise)}
-#'   \item{X}{the data matrix (without Gaussian noise)}
-#'   \item{A}{the mixing coefficient matrix}
+#'   \item{\code{Xc}}{The simulated data matrix with additive Gaussian noise.}
+#'   \item{\code{X}}{The noiseless simulated data matrix generated from the
+#'   NLSS model.}
+#'   \item{\code{A}}{The simulated mixing coefficient matrix.}
 #' }
 #' @export
 sim_NLSS = function(n = 50, alpha_0 = c(0.5,0.5,0.5), alpha_1 = 0.1,
@@ -107,18 +124,32 @@ sim_NLSS = function(n = 50, alpha_0 = c(0.5,0.5,0.5), alpha_1 = 0.1,
   return(list(Xc = sim_X1, X = sim_X, A = A) )
 }
 
-#' @title Simulate data from a linear mixture with Gaussian noise
-#' @description This function simulates observations using a linear mixture with given latent sources.
-#' @param n sample size
-#' @param sd standard deviation for the Gaussian mixing coefficient
-#' @param sd0 standard deviation for the Gaussian noise
-#' @param S the latent source matrix
-#' @return a R list containing the following terms:
+#' @title Simulate Data from a Linear Mixture with Gaussian Noise
+#'
+#' @description
+#' This function simulates observations from a linear mixture model with given
+#' latent source networks. The mixing coefficients are generated independently
+#' from zero-mean Gaussian distributions, and Gaussian noise is added to the
+#' resulting linear mixture.
+#'
+#' @param n An integer specifying the sample size. The default is \code{50}.
+#' @param sd A numeric vector specifying the standard deviations of the Gaussian
+#'   mixing coefficients for different latent sources. Its length should be
+#'   equal to the number of latent sources, namely \code{nrow(S)}. The default is
+#'   \code{c(0.5, 0.5, 0.5)}.
+#' @param sd0 A numeric value specifying the standard deviation of the additive
+#'   Gaussian noise. The default is \code{0.1}.
+#' @param S A latent source matrix, where each row represents one source network
+#'   in vectorized adjacency matrix form.
+#'
+#' @return A list containing the following components:
 #' \describe{
-#'   \item{X}{the data matrix}
-#'   \item{A}{the mixing coefficient matrix}
-#'   \item{noise}{the noise matrix}
+#'   \item{\code{X}}{The simulated data matrix from the noisy linear mixture
+#'   model.}
+#'   \item{\code{A}}{The simulated mixing coefficient matrix.}
+#'   \item{\code{noise}}{The additive Gaussian noise matrix.}
 #' }
+#'
 #' @export
 sim_ICA = function(n = 50, sd = c(0.5,0.5,0.5),
                   sd0= 0.1, S){

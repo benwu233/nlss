@@ -1,13 +1,19 @@
-#' @title Match discrete value matrices by their rows
-#' @description The function reorders the rows of matrices to match them to rows of the
-#' first matrix in the list.
+#' @title Match Rows of Discrete-Valued Source Matrices
+#' @description
+#' This function aligns the rows of a list of discrete-valued source matrices.
+#' Each matrix in the list is reordered so that its rows best match the
+#' corresponding rows of the first matrix in the list, which is used as the
+#' reference matrix.
 #'
-#' @param Slist list of discrete value source matrices with same dimensions.
+#' @param Slist A list of discrete-valued source matrices. All matrices should
+#'   have the same dimensions, with rows corresponding to latent sources and
+#'   columns corresponding to variables, node pairs, or features.
 #'
-#' @return A list of discrete value source matrices with rows matched to the rows of the first matrix.
+#' @return A list of discrete-valued source matrices with the same length as
+#'   \code{Slist}. The first matrix is unchanged, and the rows of all subsequent
+#'   matrices are reordered to match the rows of the first matrix.
 #' @export
 #'
-#' @examples
 #' @importFrom gtools permutations
 #'
 match_rows = function(Slist){

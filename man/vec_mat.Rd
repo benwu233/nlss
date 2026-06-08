@@ -2,22 +2,31 @@
 % Please edit documentation in R/vec_mat.R
 \name{vec_mat}
 \alias{vec_mat}
-\title{transformation between a symmetric matrix and a vector}
+\title{Transform Between a Symmetric Matrix and a Vector}
 \usage{
 vec_mat(x)
 }
 \arguments{
-\item{x}{a symmetric matrix or a vector}
+\item{x}{A symmetric matrix or a numeric vector. If \code{x} is a matrix, its
+lower triangular entries, excluding the diagonal, are returned as a vector.
+If \code{x} is a numeric vector, its length should be of the form
+\eqn{d(d - 1) / 2} for some integer \eqn{d}, and it is converted to a
+\eqn{d \times d} symmetric matrix with zero diagonal.}
 }
 \value{
-a vector or a symmetric matrix
+A numeric vector or a symmetric matrix. If \code{x} is a matrix, the
+  function returns a vector containing the lower triangular entries of
+  \code{x}. If \code{x} is a vector, the function returns the corresponding
+  symmetric matrix with zero diagonal.
 }
 \description{
-\code{vec_mat} is a small function that vectorize a symmetric
-matrix (only keep the upper triangle) or transform a vector to a symmetric
-matrix
+\code{vec_mat} converts a symmetric matrix to a vector by extracting its
+lower triangular entries, or converts a vector back to a symmetric matrix by
+filling the lower triangular part and then symmetrizing the matrix.
 }
 \examples{
-x = matrix(rnorm(36),nrow = 6)
-vec_mat(x)
+x <- matrix(rnorm(36), nrow = 6)
+x <- (x + t(x)) / 2
+v <- vec_mat(x)
+X <- vec_mat(v)
 }

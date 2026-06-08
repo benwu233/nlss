@@ -1,22 +1,43 @@
-#' @title MCMC sampling for NLSS
-#' @description The function conducts MCMC sampling for the NLSS model.
+#' @title MCMC Sampling for the NLSS Model
+#' This function performs Markov chain Monte Carlo (MCMC) sampling for the
+#' Network Latent Source Separation (NLSS) model. Given a discrete-valued
+#' network data matrix, the function estimates the latent source matrix, the
+#' mixing coefficient matrix, and related posterior samples.
 #'
-#' @param data a n*p matrix with discrete-valued connection states, n is the sample size, p is the num of node pairs.
-#' @param states a vector of all possible states.
-#' @param state0 the zero states.
-#' @param q the number of latent sources.
-#' @param init a list of initial values for S and A.
-#' @param total_iter the number of total iterations.
-#' @param burn_in the number of iterations to be discarded as burn-in.
-#' @param show_step the frequency for printing the current number of iterations.
+#' @param data An \eqn{n \times p} matrix of discrete-valued connection states,
+#'   where \eqn{n} is the sample size and \eqn{p} is the number of node pairs.
+#' @param states A vector containing all possible discrete states in the observed
+#'   data and latent sources. The default is \code{min(data):max(data)}.
+#' @param state0 The background or null state. The default is \code{min(data)}.
+#' @param q An integer specifying the number of latent sources.
+#' @param q0 An integer specifying the maximum number of non-background sources
+#'   allowed for each node pair. The default is \code{q}.
+#' @param init A list of initial values for the MCMC sampler. It may contain
+#'   \code{S}, \code{A}, and \code{Y}, corresponding to the initial latent source
+#'   matrix, mixing coefficient matrix, and latent allocation matrix,
+#'   respectively. Missing components are initialized automatically.
+#' @param total_iter An integer specifying the total number of MCMC iterations.
+#'   The default is \code{1000}.
+#' @param burn_in An integer specifying the number of initial MCMC iterations to
+#'   be discarded as burn-in. The default is \code{500}.
+#' @param thin An integer specifying the thinning interval for saving posterior
+#'   samples. The default is \code{10}.
+#' @param show_step An integer specifying how often the current iteration number
+#'   is printed during MCMC sampling. The default is \code{100}.
+#' @param joint A logical value indicating whether joint updating is used in the
+#'   MCMC sampler. The default is \code{TRUE}.
 #'
-#' @return a R list containing the following terms:
+#' @return A list containing posterior samples and model information from the
+#'   MCMC sampler. The returned object includes, but is not necessarily limited
+#'   to, the following components:
 #' \describe{
-#'   \item{A}{the estimated mixing coefficent matrix.}
-#'   \item{beta_coef}{the frequency of each discrete value of S appearing
-#' in the MCMC samples.}
-#'   \item{S}{the estimated latent source matrix.}
-#'   \item{logLik}{the log-likelihood trace.}
+#'   \item{\code{A}}{Posterior samples of the mixing coefficient matrix.}
+#'   \item{\code{S}}{Posterior samples of the latent source matrix.}
+#'   \item{\code{Y}}{Posterior samples of the latent allocation matrix.}
+#'   \item{\code{X}}{The input discrete-valued data matrix.}
+#'   \item{\code{K}}{The number of possible discrete states.}
+#'   \item{\code{states}}{The vector of possible discrete states.}
+#'   \item{\code{state0}}{The background or null state.}
 #' }
 #'
 #' @importFrom RcppParallel RcppParallelLibs
@@ -92,7 +113,7 @@ NLSS = function(data,  q=2, q0 = q, init = list(S=NULL,A=NULL,Y=NULL),
     Y0 = matrix(sample(q,n*p,replace = TRUE),nrow = n, ncol = p)
   }
   else{
-    Y0 = init$Y0
+    Y0 = init$Y
   }
 
   if(is.null(init$S)){

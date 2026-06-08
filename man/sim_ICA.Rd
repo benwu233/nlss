@@ -2,27 +2,36 @@
 % Please edit documentation in R/sim_NLSS.R
 \name{sim_ICA}
 \alias{sim_ICA}
-\title{Simulate data from a linear mixture with Gaussian noise}
+\title{Simulate Data from a Linear Mixture with Gaussian Noise}
 \usage{
 sim_ICA(n = 50, sd = c(0.5, 0.5, 0.5), sd0 = 0.1, S)
 }
 \arguments{
-\item{n}{sample size}
+\item{n}{An integer specifying the sample size. The default is \code{50}.}
 
-\item{sd}{standard deviation for the Gaussian mixing coefficient}
+\item{sd}{A numeric vector specifying the standard deviations of the Gaussian
+mixing coefficients for different latent sources. Its length should be
+equal to the number of latent sources, namely \code{nrow(S)}. The default is
+\code{c(0.5, 0.5, 0.5)}.}
 
-\item{sd0}{standard deviation for the Gaussian noise}
+\item{sd0}{A numeric value specifying the standard deviation of the additive
+Gaussian noise. The default is \code{0.1}.}
 
-\item{S}{the latent source matrix}
+\item{S}{A latent source matrix, where each row represents one source network
+in vectorized adjacency matrix form.}
 }
 \value{
-a R list containing the following terms:
+A list containing the following components:
 \describe{
-  \item{X}{the data matrix}
-  \item{A}{the mixing coefficient matrix}
-  \item{noise}{the noise matrix}
+  \item{\code{X}}{The simulated data matrix from the noisy linear mixture
+  model.}
+  \item{\code{A}}{The simulated mixing coefficient matrix.}
+  \item{\code{noise}}{The additive Gaussian noise matrix.}
 }
 }
 \description{
-This function simulates observations using a linear mixture with given latent sources.
+This function simulates observations from a linear mixture model with given
+latent source networks. The mixing coefficients are generated independently
+from zero-mean Gaussian distributions, and Gaussian noise is added to the
+resulting linear mixture.
 }

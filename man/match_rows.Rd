@@ -2,17 +2,23 @@
 % Please edit documentation in R/match_comp.R
 \name{match_rows}
 \alias{match_rows}
-\title{Match discrete value matrices by their rows}
+\title{Match Rows of Discrete-Valued Source Matrices}
 \usage{
 match_rows(Slist)
 }
 \arguments{
-\item{Slist}{list of discrete value source matrices with same dimensions.}
+\item{Slist}{A list of discrete-valued source matrices. All matrices should
+have the same dimensions, with rows corresponding to latent sources and
+columns corresponding to variables, node pairs, or features.}
 }
 \value{
-A list of discrete value source matrices with rows matched to the rows of the first matrix.
+A list of discrete-valued source matrices with the same length as
+  \code{Slist}. The first matrix is unchanged, and the rows of all subsequent
+  matrices are reordered to match the rows of the first matrix.
 }
 \description{
-The function reorders the rows of matrices to match them to rows of the
-first matrix in the list.
+This function aligns the rows of a list of discrete-valued source matrices.
+Each matrix in the list is reordered so that its rows best match the
+corresponding rows of the first matrix in the list, which is used as the
+reference matrix.
 }

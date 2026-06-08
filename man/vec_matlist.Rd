@@ -2,21 +2,32 @@
 % Please edit documentation in R/vec_matlist.R
 \name{vec_matlist}
 \alias{vec_matlist}
-\title{Vectrization of a list of symmetric matrices}
+\title{Vectorization of a List of Symmetric Matrices}
 \usage{
 vec_matlist(mat_list, q = 0, binarize = FALSE)
 }
 \arguments{
-\item{mat_list}{a list of matrices.}
+\item{mat_list}{A list of symmetric matrices. All matrices should have the
+same dimensions.}
 
-\item{q}{a quantile serving as a threshold, any value smaller than the quantile will be set to zero.}
+\item{q}{A numeric value between 0 and 1 specifying the quantile threshold
+applied to each vectorized matrix. Entries smaller than or equal to the
+\code{q}-th empirical quantile are set to zero. The default is \code{0},
+in which case no thresholding is applied.}
 
-\item{binarize}{logical. Binarize the outcome or not.}
+\item{binarize}{A logical value indicating whether the output should be
+binarized. If \code{TRUE}, nonzero entries are returned as \code{TRUE} and
+zero entries as \code{FALSE}. The default is \code{FALSE}.}
 }
 \value{
-a matrix with each row representing a matrix from the input mat_list.
+A matrix in which each row corresponds to one matrix in
+  \code{mat_list}, and each column corresponds to one lower triangular entry
+  of the original symmetric matrices. If \code{binarize = TRUE}, a logical
+  matrix is returned.
 }
 \description{
-Vectorize a list of symmetric matrices and stack them together.
-The outcome can be thresholded and binarized with optional parameters.
+This function vectorizes a list of symmetric matrices by extracting the
+lower triangular entries of each matrix and stacking the resulting vectors
+row by row. Optionally, each vectorized matrix can be thresholded by its own
+empirical quantile and further binarized.
 }

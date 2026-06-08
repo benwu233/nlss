@@ -2,29 +2,39 @@
 % Please edit documentation in R/sim_NLSS.R
 \name{sim_NLSS}
 \alias{sim_NLSS}
-\title{Simulate data from a NLSS model adding Gaussian noise}
+\title{Simulate Data from an NLSS Model with Gaussian Noise}
 \usage{
 sim_NLSS(n = 50, alpha_0 = c(0.5, 0.5, 0.5), alpha_1 = 0.1, sd0 = 0.3, S)
 }
 \arguments{
-\item{n}{sample size}
+\item{n}{An integer specifying the sample size. The default is \code{50}.}
 
-\item{alpha_0}{concentration parameter (a three dimensional vector) for latent sources.}
+\item{alpha_0}{A numeric vector of Dirichlet concentration parameters for the
+latent source components. Its length should be equal to the number of
+latent sources, namely \code{nrow(S)}. The default is
+\code{c(0.5, 0.5, 0.5)}.}
 
-\item{alpha_1}{concentration parameter (a scale variable) for noise.}
+\item{alpha_1}{A numeric value specifying the Dirichlet concentration
+parameter for the background or noise component. The default is \code{0.1}.}
 
-\item{sd0}{standard deviation for the Gaussian noise}
+\item{sd0}{A numeric value specifying the standard deviation of the additive
+Gaussian noise. The default is \code{0.3}.}
 
-\item{S}{the latent source matrix}
+\item{S}{A latent source matrix, where each row represents one source network
+in vectorized adjacency matrix form.}
 }
 \value{
-a R list containing the following terms:
+A list containing the following components:
 \describe{
-  \item{Xc}{the data matrix (with Gaussian noise)}
-  \item{X}{the data matrix (without Gaussian noise)}
-  \item{A}{the mixing coefficient matrix}
+  \item{\code{Xc}}{The simulated data matrix with additive Gaussian noise.}
+  \item{\code{X}}{The noiseless simulated data matrix generated from the
+  NLSS model.}
+  \item{\code{A}}{The simulated mixing coefficient matrix.}
 }
 }
 \description{
-This function simulates observations using NLSS with given latent sources.
+This function simulates observations from the Network Latent Source
+Separation (NLSS) model with given latent source networks. Mixing coefficients
+are generated from a Dirichlet distribution, and optional Gaussian noise is
+added to the noiseless NLSS observations.
 }

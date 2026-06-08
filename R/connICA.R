@@ -2,7 +2,11 @@
 #' @param data Data matrix
 #' @param q number of sources
 #'
-#' @return
+#' @return a R list containing the following terms:
+#' \describe{
+#'   \item{A}{the estimated mixing coefficent matrix.}
+#'   \item{S}{the estimated latent source matrix.}
+#' }
 #'
 #' @importFrom ica icafast
 #' @importFrom stats quantile

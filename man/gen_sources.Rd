@@ -2,20 +2,25 @@
 % Please edit documentation in R/sim_NLSS.R
 \name{gen_sources}
 \alias{gen_sources}
-\title{Generate latent sources}
+\title{Generate Latent Source Networks}
 \usage{
 gen_sources(n_node = 50)
 }
 \arguments{
-\item{n_node}{number of nodes.}
+\item{n_node}{An integer specifying the number of nodes in the network.
+The default is \code{50}.}
 }
 \value{
-a R list containing the following terms:
+A list containing the following components:
 \describe{
-  \item{S}{the latent source matrix with each row representing a source network (vectorized adjacency matrix).}
-  \item{community}{the community index for each node.}
+  \item{\code{S}}{A latent source matrix, where each row represents one
+  source network in vectorized adjacency matrix form.}
+  \item{\code{community}}{A vector of community labels for the network nodes.}
 }
 }
 \description{
-This function simulates generate three latent source networks with eight communities.
+This function generates three latent source networks with a predefined
+eight-community structure. The generated source networks include a
+within-community source and two hub-like sources associated with selected
+communities.
 }

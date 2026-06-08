@@ -1,13 +1,45 @@
 #' @title Summary of the MCMC result for NLSS
-#' @description The function summarizes the MCMC result and returns the posterior mean
-#' of A, the posterior mode of S, beta coefficient (frequency of each discrete value of S
-#' among the MCMC samples) and the log-likelihood trace.
+#' @description The function summarizes the MCMC result returned by \code{NLSS}. It computes
+#' the posterior mean of the mixing/loading matrix \code{A}, the element-wise
+#' posterior mode of the latent source matrix \code{S}, the posterior inclusion
+#' probability of non-background states, the BIC value, and the log-likelihood
+#' trace over selected MCMC iterations.
 #'
-#' @param res result from the function NLSS
+#' @param res A list returned by the function \code{NLSS}. It should contain
+#'   MCMC samples of the mixing/loading matrix \code{A} and the latent source
+#'   matrix \code{S}, together with other components such as \code{X}, \code{Y},
+#'   \code{K}, \code{states}, and \code{state0}.
+#' @param th A numeric value between 0 and 1 specifying the posterior frequency
+#'   threshold for retaining a non-background state in the estimated latent source
+#'   matrix.
+#' @param nstart An integer specifying the first MCMC iteration used for
+#'   posterior summarization.
+#' @param nend An integer specifying the last MCMC iteration used for posterior
+#'   summarization.
 #'
-#' @return
+#' @return A list containing the following components:
+#' \describe{
+#'   \item{\code{A}}{Posterior mean of the mixing/loading matrix \code{A}
+#'   over iterations \code{nstart:nend}.}
+#'   \item{\code{S_mode}}{Element-wise posterior mode of the latent source
+#'   matrix \code{S} over iterations \code{nstart:nend}.}
+#'   \item{\code{S}}{Thresholded estimate of the latent source matrix. It is
+#'   obtained from \code{S_mode} by replacing weakly supported non-background
+#'   states with the background state \code{state0}.}
+#'   \item{\code{Z}}{The transformed or reduced data matrix stored as
+#'   \code{res$Y}.}
+#'   \item{\code{pip}}{Posterior inclusion probability for each entry of
+#'   \code{S}, defined as one minus the posterior frequency of the background
+#'   state \code{state0}.}
+#'   \item{\code{BIC}}{Bayesian information criterion computed from the
+#'   thresholded latent source matrix \code{S} and the posterior mean estimate
+#'   of \code{A}.}
+#'   \item{\code{loglik}}{Log-likelihood evaluated at the posterior mean
+#'   estimate of \code{A} and the thresholded estimate of \code{S}.}
+#'   \item{\code{loglik_mcmc}}{Log-likelihood trace evaluated at each MCMC
+#'   sample from iterations \code{nstart} to \code{nend}.}
+#' }
 #'
-#' @examples
 #' @export
 NLSS_sum = function(res, th=0.95, nstart = 1, nend = 1){
 
@@ -20,10 +52,6 @@ NLSS_sum = function(res, th=0.95, nstart = 1, nend = 1){
 
   p = ncol(res$S)
   q = nrow(res$S)
-
-  # tmp = factor(res$S[,,nstart:nend],levels=res$states)
-  #
-  # dim(tmp) = dim(res$S[,,nstart:nend])
 
   tmp = res$S[,,nstart:nend]
 

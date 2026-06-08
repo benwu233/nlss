@@ -1,14 +1,26 @@
-#' @title Reliability of sources
-#' @description The function calculates the reliability index of sources for NLSS. The input is a list of
-#' matrices with the first matrix being estimated sources from the whole dataset and the following matrices
-#' being estimated sources from bootsrap samples of the whole dataset.
+#' @title Reliability of Latent Sources
+#' @description
+#' This function calculates the reliability index of latent sources estimated by
+#' the NLSS model. The input is a list of source matrices, where the first matrix
+#' is the source estimate obtained from the whole dataset and the remaining
+#' matrices are source estimates obtained from bootstrap samples. The reliability
+#' index compares the reproducibility of the same source across bootstrap samples
+#' with the reproducibility expected from other sources.
 #'
-#' @param Slist a list of matrices with rows representing vectorization of latent sources.
-#'
-#' @return Reliability index.
+#' @param Slist A list of source matrices. Each matrix should have rows
+#'   representing vectorized latent sources and columns representing node pairs
+#'   or features. The first matrix is treated as the reference source estimate,
+#'   while the remaining matrices are treated as bootstrap estimates. All matrices
+#'   should have the same dimensions and their rows should already be matched.
+#' @param conn_only A logical value indicating whether reliability should be
+#'   computed only over non-background connections in the reference source. If
+#'   \code{TRUE}, only entries of the reference source that are not equal to
+#'   zero are used. If \code{FALSE}, all entries are used. The default is
+#'   \code{TRUE}.
+#' @return A numeric vector containing the reliability index for each latent
+#'   source. Each element corresponds to one row of the reference source matrix.
 #' @export
 #'
-#' @examples
 relia_rows = function(Slist, conn_only=TRUE){
 
   S0 = Slist[[1]]
@@ -107,6 +119,37 @@ relia_idx = function(Slist, group, g0,g1){
   return(r = r_out )
 }
 
+#' @title Reliability of Latent Sources by Node Group
+#'
+#' @description
+#' This function calculates the reliability index of latent sources separately
+#' for each within-group or between-group block of network connections. The first
+#' matrix in \code{Slist} is treated as the reference estimate from the whole
+#' dataset, and the remaining matrices are treated as bootstrap estimates.
+#'
+#' @param Slist A list of source matrices. Each matrix should have rows
+#'   representing vectorized latent sources and columns representing node pairs.
+#'   The first matrix is treated as the reference source estimate, while the
+#'   remaining matrices are treated as bootstrap estimates. All matrices should
+#'   have the same dimensions and their rows should already be matched.
+#' @param group A vector of group labels for network nodes. Its length should be
+#'   equal to the number of nodes in the network.
+#' @param conn_only A logical value indicating whether reliability should be
+#'   computed only over non-background connections in the reference source within
+#'   each group block. If \code{TRUE}, only entries of the reference source that
+#'   are not equal to zero are used. If \code{FALSE}, all entries are used. The
+#'   default is \code{TRUE}.
+#'
+#' @return A list containing the following components:
+#' \describe{
+#'   \item{\code{r}}{A matrix of reliability indices. Rows correspond to
+#'   within-group or between-group connection blocks, and columns correspond to
+#'   latent sources.}
+#'   \item{\code{group}}{A vector indicating the group-block membership of each
+#'   vectorized node pair. This vector has the same length as the number of
+#'   columns in the source matrices.}
+#' }
+#'
 #' @export
 relia_rows_bygroup = function(Slist,group,conn_only=TRUE){
 
@@ -136,7 +179,6 @@ relia_rows_bygroup = function(Slist,group,conn_only=TRUE){
   r_out = matrix(0,nrow=L, ncol=nrow(S0))
   r_out2 = matrix(0,nrow=L, ncol=nrow(S0))
 
-  tag = 1
   for(g in ind){
 
     S0_g = S0[,group_vec==g]

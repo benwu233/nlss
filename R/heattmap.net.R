@@ -1,11 +1,25 @@
-#' @title Heatmaps for Networks
-#' @description The function plots heatmaps for single or multiple network(s).
+#' @title Heatmaps for Network Matrices
+#' @description
+#' This function plots heatmaps for one or multiple networks. Each row of
+#' \code{S} is treated as a vectorized weighted adjacency matrix and is converted
+#' back to a symmetric matrix before plotting. If multiple rows are provided,
+#' the corresponding network heatmaps are displayed side by side.
 #'
-#' @param S a matrix with each row representing a vectorized weighted adjacency matrix.
-#' @param lim a 2-dimentional vector specifying the limits for the data.
-#' @param community a vector represents the community each node belongs to.
-#' @param color colorbar for the heatmap.
-#' @return
+#' @param S A matrix or vector representing one or multiple vectorized weighted
+#'   adjacency matrices. If \code{S} is a matrix, each row corresponds to one
+#'   vectorized network. If \code{S} is a vector, it is treated as a single
+#'   vectorized network. The length of each vectorized network should be
+#'   \eqn{d(d-1)/2}, where \eqn{d} is the number of nodes.
+#' @param lim A numeric vector of length two specifying the lower and upper
+#'   limits of the color scale. The default is \code{c(min(S), max(S))}.
+#' @param community A vector of community labels for network nodes. Its length
+#'   should be equal to the number of nodes in the network. The community labels
+#'   are used to add side colors and separation lines in the heatmap. The default
+#'   assumes all nodes belong to the same community.
+#' @param color A vector of colors used for the heatmap color scale. The default
+#'   is \code{bluered(100)}.
+#' @return This function is called for its side effect of producing heatmap
+#'   plots. It does not return a user-level object.
 #' @export
 #' @import gplots
 #' @import grDevices
@@ -15,7 +29,6 @@
 #' @importFrom plotrix gradient.rect
 #' @importFrom graphics text
 #'
-#' @examples
 heatmap.net = function(S,lim = c(min(S),max(S)),
                        community = rep(1,(1 + sqrt(1+8*ncol(S))) / 2),
                        color = bluered(100)){

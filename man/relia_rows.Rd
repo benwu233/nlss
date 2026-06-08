@@ -2,18 +2,32 @@
 % Please edit documentation in R/relia_comp.R
 \name{relia_rows}
 \alias{relia_rows}
-\title{Reliability of sources}
+\title{Reliability of Latent Sources}
 \usage{
 relia_rows(Slist, conn_only = TRUE)
 }
 \arguments{
-\item{Slist}{a list of matrices with rows representing vectorization of latent sources.}
+\item{Slist}{A list of source matrices. Each matrix should have rows
+representing vectorized latent sources and columns representing node pairs
+or features. The first matrix is treated as the reference source estimate,
+while the remaining matrices are treated as bootstrap estimates. All matrices
+should have the same dimensions and their rows should already be matched.}
+
+\item{conn_only}{A logical value indicating whether reliability should be
+computed only over non-background connections in the reference source. If
+\code{TRUE}, only entries of the reference source that are not equal to
+zero are used. If \code{FALSE}, all entries are used. The default is
+\code{TRUE}.}
 }
 \value{
-Reliability index.
+A numeric vector containing the reliability index for each latent
+  source. Each element corresponds to one row of the reference source matrix.
 }
 \description{
-The function calculates the reliability index of sources for NLSS. The input is a list of
-matrices with the first matrix being estimated sources from the whole dataset and the following matrices
-being estimated sources from bootsrap samples of the whole dataset.
+This function calculates the reliability index of latent sources estimated by
+the NLSS model. The input is a list of source matrices, where the first matrix
+is the source estimate obtained from the whole dataset and the remaining
+matrices are source estimates obtained from bootstrap samples. The reliability
+index compares the reproducibility of the same source across bootstrap samples
+with the reproducibility expected from other sources.
 }
