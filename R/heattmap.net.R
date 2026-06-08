@@ -2,13 +2,9 @@
 #' @description The function plots heatmaps for single or multiple network(s).
 #'
 #' @param S a matrix with each row representing a vectorized weighted adjacency matrix.
-#' @param lim a 2-dimentional vector specifying the limits for the data,
+#' @param lim a 2-dimentional vector specifying the limits for the data.
 #' @param community a vector represents the community each node belongs to.
-#' @param color colorbar for the heatmap,
-#' @param legend type of the legend, it can be NULL (no legend), "FC" (a symmetric, functional-connectivity-type legend) or "SC" (a asymmetric, structural-connectivity-type legend).
-#' @param path the path that heatmaps will be stored at, ended with a "/" or "\".
-#' @param filename names for heatmaps.
-#'
+#' @param color colorbar for the heatmap.
 #' @return
 #' @export
 #' @import gplots
@@ -22,8 +18,7 @@
 #' @examples
 heatmap.net = function(S,lim = c(min(S),max(S)),
                        community = rep(1,(1 + sqrt(1+8*ncol(S))) / 2),
-                       color = bluered(100),
-                       ncol = nrow(S)){
+                       color = bluered(100)){
 
   sidecolor = rep("#b7b7b7",length(community))
   colsep0 = NULL
@@ -67,7 +62,7 @@ heatmap.net = function(S,lim = c(min(S),max(S)),
     grid.grab()
   })
   grid.newpage()
-  grid.arrange(grobs=gl, ncol=ncol, clip=TRUE)
+  grid.arrange(grobs=gl, ncol=nrow(S), clip=TRUE)
 }
 
 

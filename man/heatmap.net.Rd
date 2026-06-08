@@ -8,24 +8,17 @@ heatmap.net(
   S,
   lim = c(min(S), max(S)),
   community = rep(1, (1 + sqrt(1 + 8 * ncol(S)))/2),
-  color = bluered(100),
-  ncol = nrow(S)
+  color = bluered(100)
 )
 }
 \arguments{
 \item{S}{a matrix with each row representing a vectorized weighted adjacency matrix.}
 
-\item{lim}{a 2-dimentional vector specifying the limits for the data,}
+\item{lim}{a 2-dimentional vector specifying the limits for the data.}
 
 \item{community}{a vector represents the community each node belongs to.}
 
-\item{color}{colorbar for the heatmap,}
-
-\item{legend}{type of the legend, it can be NULL (no legend), "FC" (a symmetric, functional-connectivity-type legend) or "SC" (a asymmetric, structural-connectivity-type legend).}
-
-\item{path}{the path that heatmaps will be stored at, ended with a "/" or "\".}
-
-\item{filename}{names for heatmaps.}
+\item{color}{colorbar for the heatmap.}
 }
 \description{
 The function plots heatmaps for single or multiple network(s).
